@@ -9,7 +9,7 @@ import { PropsWithChildren } from 'react';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
   },
 });
 
