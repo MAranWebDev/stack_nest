@@ -10,9 +10,9 @@
   ],
   "scripts": {
     "clean:all": "rm -rf ./node_modules && rm -rf ./*/node_modules && rm -rf ./*/dist && rm -rf ./yarn.lock",
-    "format": "yarn --cwd ./server format && yarn --cwd ./client format",
-    "lint": "yarn --cwd ./server lint && yarn --cwd ./client lint",
     "start:server": "yarn --cwd ./server start:dev",
-    "start:client": "yarn --cwd ./client dev"
+    "start:client": "yarn --cwd ./client dev",
+    "format": "yarn --cwd ./server format && yarn --cwd ./client format",
+    "lint": "yarn --cwd ./server lint && yarn --cwd ./client lint"
   }
 }
