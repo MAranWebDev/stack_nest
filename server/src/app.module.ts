@@ -4,6 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ENV } from './config/env';
+import { AuthModule } from './features/auth/auth.module';
+import { SampleModule } from './features/sample/sample.module';
+import { UsersModule } from './features/users/users.module';
 
 @Module({
   imports: [
@@ -14,6 +17,9 @@ import { ENV } from './config/env';
         uri: configService.get('DATABASE_URL'),
       }),
     }),
+    SampleModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
