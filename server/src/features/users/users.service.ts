@@ -9,11 +9,14 @@ export class UsersService {
   constructor(@InjectModel(Users.name) private usersModel: Model<Users>) {}
 
   async create(createUserDto: CreateUserDto) {
-    const createdUser = new this.usersModel(createUserDto);
-    return createdUser.save();
+    return this.usersModel.create(createUserDto);
   }
 
   async findAll() {
     return this.usersModel.find().exec();
+  }
+
+  async findOneByEmail(email: string) {
+    return this.usersModel.findOne({ email }).exec();
   }
 }
