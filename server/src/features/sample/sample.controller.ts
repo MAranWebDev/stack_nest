@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Public } from '../auth';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateSampleDto } from './dto/create-sample.dto';
 import { UpdateSampleDto } from './dto/update-sample.dto';
 import { SampleService } from './sample.service';
 
 @ApiTags('sample')
-@Public()
+@ApiBearerAuth()
 @Controller('sample')
 export class SampleController {
   constructor(private readonly sampleService: SampleService) {}

@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { Public } from './features/auth';
 
 @ApiTags('root')
+@Public()
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Public()
   @Get()
   getHello(): string {
     return this.appService.getHello();
