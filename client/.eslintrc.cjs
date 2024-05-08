@@ -20,16 +20,17 @@ module.exports = {
     /* custom rules */
     'no-restricted-imports': ['error', { patterns: ['src', '../**', 'features/*/*/*'] }],
     'import/no-unresolved': ['error', { ignore: ['^@/'] }],
-    'import/no-default-export': 'error',
-    'import/default': 'off',
-    'import/no-named-as-default-member': 'off',
     'import/order': [
       'error',
       {
+        pathGroups: [{ pattern: '@/**', group: 'external', position: 'after' }],
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
         alphabetize: { order: 'asc', caseInsensitive: true },
         'newlines-between': 'always',
       },
     ],
+    'import/no-default-export': 'error',
+    'import/default': 'off',
+    'import/no-named-as-default-member': 'off',
   },
 };

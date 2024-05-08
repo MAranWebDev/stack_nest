@@ -5,7 +5,7 @@ module.exports = {
   parserOptions: { project: 'tsconfig.json', tsconfigRootDir: __dirname, sourceType: 'module' },
   settings: { 'import/resolver': { typescript: true } },
   ignorePatterns: ['.eslintrc.js', 'node_modules', 'dist'],
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: ['@typescript-eslint/eslint-plugin', 'import'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
@@ -22,16 +22,17 @@ module.exports = {
     /* custom rules */
     'no-restricted-imports': ['error', { patterns: ['src', '../**', 'features/*/*/*'] }],
     'import/no-unresolved': ['error', { ignore: ['^@/'] }],
-    'import/no-default-export': 'error',
-    'import/default': 'off',
-    'import/no-named-as-default-member': 'off',
     'import/order': [
       'error',
       {
+        pathGroups: [{ pattern: '@/**', group: 'external', position: 'after' }],
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
         alphabetize: { order: 'asc', caseInsensitive: true },
         'newlines-between': 'always',
       },
     ],
+    'import/no-default-export': 'error',
+    'import/default': 'off',
+    'import/no-named-as-default-member': 'off',
   },
 };
