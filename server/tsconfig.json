@@ -18,7 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
 
-    /* absolute paths */
+    /* absolute path */
     "paths": { "@/*": ["./src/*"] }
   }
 }
