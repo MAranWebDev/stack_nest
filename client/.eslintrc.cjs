@@ -1,7 +1,10 @@
 module.exports = {
   root: true,
   env: { browser: true, node: true, es6: true },
+  parser: '@typescript-eslint/parser',
   settings: { 'import/resolver': { typescript: {} } },
+  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'dist', 'node_modules'],
+  plugins: ['react-refresh'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -11,10 +14,8 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'dist', 'node_modules'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
   rules: {
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'no-restricted-imports': ['error', { patterns: ['../**', 'src', '@/*/*/*'] }],
     'import/no-unresolved': 'off',
     'import/default': 'off',
@@ -28,6 +29,5 @@ module.exports = {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
       },
     ],
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },
 };

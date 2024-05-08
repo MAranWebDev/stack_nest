@@ -3,6 +3,7 @@
 - editorconfig: https://editorconfig.org/
 - nestjs: https://docs.nestjs.com/first-steps
 - vite: https://vitejs.dev/guide/
+- bulletproof-react: https://github.com/alan2207/bulletproof-react
 - prettier: https://prettier.io/docs/en/install.html
 - eslint-plugin-prettier: https://github.com/prettier/eslint-plugin-prettier
-- bulletproof-react: https://github.com/alan2207/bulletproof-react
+- eslint-plugin-import: https://github.com/import-js/eslint-plugin-import
