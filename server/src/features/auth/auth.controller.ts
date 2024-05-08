@@ -1,8 +1,10 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateUserDto, LogUserDto } from '../users/dtos';
+
+import { CreateUserDto, LogUserDto } from '@/features/users/dtos';
+
 import { AuthService } from './auth.service';
-import { Public } from './decorators';
+import { Public } from './public.decorator';
 
 @ApiTags('auth')
 @Public()
