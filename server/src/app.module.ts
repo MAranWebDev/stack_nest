@@ -21,10 +21,7 @@ import { UsersModule } from './features/users/users.module';
       }),
       inject: [ConfigService],
     }),
-    BullBoardModule.forRoot({
-      route: '/queues',
-      adapter: ExpressAdapter,
-    }),
+    BullBoardModule.forRoot({ route: '/queues', adapter: ExpressAdapter }),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get('DATABASE_URL'),
