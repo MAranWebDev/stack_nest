@@ -1,8 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { CreateSampleDto } from './dto/create-sample.dto';
-import { UpdateSampleDto } from './dto/update-sample.dto';
+import { CreateSampleDto, UpdateSampleDto } from './dtos';
 import { SampleService } from './sample.service';
 
 @ApiTags('sample')
