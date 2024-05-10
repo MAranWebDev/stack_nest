@@ -5,16 +5,15 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { SampleController } from './sample.controller';
-import { SampleProcessor } from './sample.processor';
+import { SAMPLE_QUEUE, SampleProcessor } from './sample.processor';
 import { Sample, SampleSchema } from './sample.schema';
 import { SampleService } from './sample.service';
-import { QueuesEnum } from './types';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Sample.name, schema: SampleSchema }]),
-    BullModule.registerQueue({ name: QueuesEnum.TEST }),
-    BullBoardModule.forFeature({ name: QueuesEnum.TEST, adapter: BullAdapter }),
+    BullModule.registerQueue({ name: SAMPLE_QUEUE.NAME }),
+    BullBoardModule.forFeature({ name: SAMPLE_QUEUE.NAME, adapter: BullAdapter }),
   ],
   controllers: [SampleController],
   providers: [SampleService, SampleProcessor],

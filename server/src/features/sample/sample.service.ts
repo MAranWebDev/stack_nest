@@ -1,27 +1,40 @@
+import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Queue } from 'bull';
+import { Model } from 'mongoose';
 
-import { CreateSampleDto } from './dto/create-sample.dto';
-import { UpdateSampleDto } from './dto/update-sample.dto';
+import { CreateSampleDto, UpdateSampleDto } from './dtos';
+import { SAMPLE_QUEUE } from './sample.processor';
+import { Sample } from './sample.schema';
 
 @Injectable()
 export class SampleService {
-  create(createSampleDto: CreateSampleDto) {
-    return 'This action adds a new sample' + createSampleDto;
+  constructor(
+    @InjectModel(Sample.name) private sampleModel: Model<Sample>,
+    @InjectQueue(SAMPLE_QUEUE.NAME) private sampleQueue: Queue,
+  ) {}
+
+  async create(createSampleDto: CreateSampleDto) {
+    await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_CREATE, createSampleDto, { delay: 5000 });
+    return 'This will add a new sample soon';
   }
 
-  findAll() {
-    return `This action returns all sample`;
+  async findAll() {
+    return this.sampleModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sample`;
+  async findOne(id: number) {
+    return this.sampleModel.findById(id).exec();
   }
 
-  update(id: number, updateSampleDto: UpdateSampleDto) {
-    return `This action updates a #${id} sample` + updateSampleDto;
+  async update(id: number, updateSampleDto: UpdateSampleDto) {
+    await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_UPDATE, { id, updateSampleDto }, { delay: 5000 });
+    return `This will update #${id} sample soon`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sample`;
+  async remove(id: number) {
+    await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_REMOVE, id, { delay: 5000 });
+    return `This will remove #${id} sample soon`;
   }
 }
