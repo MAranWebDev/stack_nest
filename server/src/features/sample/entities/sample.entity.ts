@@ -1,1 +1,1 @@
-export class Sample {}
+export class SampleEntity {}
