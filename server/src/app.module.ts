@@ -1,3 +1,5 @@
+import { ExpressAdapter } from '@bull-board/express';
+import { BullBoardModule } from '@bull-board/nestjs';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -18,6 +20,10 @@ import { UsersModule } from './features/users/users.module';
         redis: { host: configService.get('REDIS_HOST'), port: configService.get('REDIS_PORT') },
       }),
       inject: [ConfigService],
+    }),
+    BullBoardModule.forRoot({
+      route: '/queues',
+      adapter: ExpressAdapter,
     }),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({

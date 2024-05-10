@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -8,6 +8,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+  const logger = new Logger('main');
 
   /* url */
   app.setGlobalPrefix('api/v1');
@@ -26,7 +27,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   await app.listen(configService.get('SERVER_PORT'), () => {
-    console.log(`server running on port ${configService.get('SERVER_PORT')}`);
+    logger.log(`server running on port ${configService.get('SERVER_PORT')}`);
   });
 }
 bootstrap();
