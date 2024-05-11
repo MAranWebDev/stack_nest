@@ -24,16 +24,16 @@ export class SampleService {
     return this.sampleModel.find().exec();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.sampleModel.findById(id).exec();
   }
 
-  async update(id: number, updateSampleDto: UpdateSampleDto) {
+  async update(id: string, updateSampleDto: UpdateSampleDto) {
     await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_UPDATE, { id, updateSampleDto }, { delay: 5000 });
     return `This will update #${id} sample soon`;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_REMOVE, id, { delay: 5000 });
     return `This will remove #${id} sample soon`;
   }
