@@ -16,8 +16,7 @@ export class SampleService {
   ) {}
 
   async create(createSampleDto: CreateSampleDto) {
-    await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_CREATE, createSampleDto, { delay: 5000 });
-    return 'This will add a new sample soon';
+    return this.sampleModel.create(createSampleDto);
   }
 
   async findAll() {
@@ -29,11 +28,24 @@ export class SampleService {
   }
 
   async update(id: string, updateSampleDto: UpdateSampleDto) {
+    return this.sampleModel.findByIdAndUpdate(id, updateSampleDto);
+  }
+
+  async remove(id: string) {
+    return this.sampleModel.findByIdAndDelete(id);
+  }
+
+  async queueCreate(createSampleDto: CreateSampleDto) {
+    await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_CREATE, createSampleDto, { delay: 5000 });
+    return 'This will add a new sample soon';
+  }
+
+  async queueUpdate(id: string, updateSampleDto: UpdateSampleDto) {
     await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_UPDATE, { id, updateSampleDto }, { delay: 5000 });
     return `This will update #${id} sample soon`;
   }
 
-  async remove(id: string) {
+  async queueRemove(id: string) {
     await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_REMOVE, id, { delay: 5000 });
     return `This will remove #${id} sample soon`;
   }

@@ -12,7 +12,7 @@ export class SampleController {
 
   @Post()
   create(@Body() createSampleDto: CreateSampleDto) {
-    return this.sampleService.create(createSampleDto);
+    return this.sampleService.queueCreate(createSampleDto);
   }
 
   @Get()
@@ -27,11 +27,11 @@ export class SampleController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSampleDto: UpdateSampleDto) {
-    return this.sampleService.update(id, updateSampleDto);
+    return this.sampleService.queueUpdate(id, updateSampleDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.sampleService.remove(id);
+    return this.sampleService.queueRemove(id);
   }
 }
