@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   env: { browser: true, node: true, es6: true },
   parser: '@typescript-eslint/parser',
-  settings: { 'import/resolver': { typescript: {} } },
+  settings: { 'import/resolver': { typescript: true } },
   ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts', 'node_modules', 'dist'],
   plugins: ['react-refresh'],
   extends: [

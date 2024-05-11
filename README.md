@@ -7,3 +7,7 @@
 - prettier: https://prettier.io/docs/en/install.html
 - eslint-plugin-prettier: https://github.com/prettier/eslint-plugin-prettier
 - eslint-plugin-import: https://github.com/import-js/eslint-plugin-import
+
+## To do
+
+- add credentials to redis
