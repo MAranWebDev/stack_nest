@@ -12,3 +12,4 @@
 
 - add credentials to redis
 - fix bull-board route (use github example)
+- fix sample.processor import service
