@@ -1,10 +1,8 @@
 import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { Job } from 'bull';
-import { Model } from 'mongoose';
 
-import { Sample } from './sample.schema';
+import { SampleService } from './services/sample.service';
 
 export enum SAMPLE_QUEUE {
   NAME = 'test',
@@ -17,24 +15,25 @@ export enum SAMPLE_QUEUE {
 export class SampleProcessor {
   private readonly logger = new Logger(SampleProcessor.name);
 
-  constructor(@InjectModel(Sample.name) private sampleModel: Model<Sample>) {}
+  constructor(private sampleService: SampleService) {}
 
   @Process(SAMPLE_QUEUE.TYPE_CREATE)
   async create(job: Job) {
-    await this.sampleModel.create(job.data);
-    this.logger.debug('record created');
+    const response = await this.sampleService.create(job.data);
+    this.logger.debug(`record created with response: ${response}`);
+    return response;
   }
 
   @Process(SAMPLE_QUEUE.TYPE_UPDATE)
   async update(job: Job) {
-    await this.sampleModel.findByIdAndUpdate(job.data.id, job.data.updateSampleDto);
-    this.logger.debug('record updated');
+    const response = await this.sampleService.update(job.data.id, job.data.updateSampleDto);
+    this.logger.debug(`record updated with response: ${response}`);
   }
 
   @Process(SAMPLE_QUEUE.TYPE_REMOVE)
   async remove(job: Job) {
-    await this.sampleModel.findByIdAndDelete(job.data);
-    this.logger.debug('record removed');
+    const response = await this.sampleService.remove(job.data);
+    this.logger.debug(`record removed with response: ${response}`);
   }
 
   @OnQueueActive()

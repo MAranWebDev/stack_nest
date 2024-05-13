@@ -2,17 +2,21 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateSampleDto, UpdateSampleDto } from './dtos';
-import { SampleService } from './sample.service';
+import { SampleQueueService } from './services/sample-queue.service';
+import { SampleService } from './services/sample.service';
 
 @ApiTags('sample')
 @ApiBearerAuth()
 @Controller('sample')
 export class SampleController {
-  constructor(private readonly sampleService: SampleService) {}
+  constructor(
+    private readonly sampleService: SampleService,
+    private readonly sampleQueueService: SampleQueueService,
+  ) {}
 
   @Post()
   create(@Body() createSampleDto: CreateSampleDto) {
-    return this.sampleService.queueCreate(createSampleDto);
+    return this.sampleQueueService.create(createSampleDto);
   }
 
   @Get()
@@ -27,11 +31,11 @@ export class SampleController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSampleDto: UpdateSampleDto) {
-    return this.sampleService.queueUpdate(id, updateSampleDto);
+    return this.sampleQueueService.update(id, updateSampleDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.sampleService.queueRemove(id);
+    return this.sampleQueueService.remove(id);
   }
 }
