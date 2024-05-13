@@ -7,7 +7,7 @@ import { SAMPLE_QUEUE } from '@/features/sample/sample.processor';
 
 @Injectable()
 export class SampleQueueService {
-  private readonly DELAY_TIME = 10000;
+  private readonly DELAY_TIME = 5000;
 
   constructor(@InjectQueue(SAMPLE_QUEUE.NAME) private sampleQueue: Queue) {}
 
@@ -15,7 +15,7 @@ export class SampleQueueService {
     await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_CREATE, createSampleDto, {
       delay: this.DELAY_TIME,
     });
-    return 'This will add a new sample soon';
+    return { message: 'This will add a new sample soon' };
   }
 
   async update(id: string, updateSampleDto: UpdateSampleDto) {
@@ -24,11 +24,11 @@ export class SampleQueueService {
       { id, updateSampleDto },
       { delay: this.DELAY_TIME },
     );
-    return `This will update #${id} sample soon`;
+    return { message: `This will update #${id} sample soon` };
   }
 
   async remove(id: string) {
     await this.sampleQueue.add(SAMPLE_QUEUE.TYPE_REMOVE, id, { delay: this.DELAY_TIME });
-    return `This will remove #${id} sample soon`;
+    return { message: `This will remove #${id} sample soon` };
   }
 }

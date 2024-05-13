@@ -5,7 +5,7 @@ import { Job } from 'bull';
 import { SampleService } from './services/sample.service';
 
 export enum SAMPLE_QUEUE {
-  NAME = 'test',
+  NAME = 'sample',
   TYPE_CREATE = 'create',
   TYPE_UPDATE = 'update',
   TYPE_REMOVE = 'remove',
