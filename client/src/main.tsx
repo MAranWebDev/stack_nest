@@ -1,19 +1,24 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
 import { MainTheme } from './components/themes';
+import { ContextProvider } from './config/react-context';
+import { QueryProvider } from './config/react-query';
 import { reactRouter } from './config/react-router';
-
-const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <MainTheme>
-        <RouterProvider router={reactRouter} />
-      </MainTheme>
-    </QueryClientProvider>
+    {/* react query */}
+    <QueryProvider>
+      {/* react context */}
+      <ContextProvider>
+        {/* mui theme */}
+        <MainTheme>
+          {/* react router dom */}
+          <RouterProvider router={reactRouter} />
+        </MainTheme>
+      </ContextProvider>
+    </QueryProvider>
   </React.StrictMode>,
 );
