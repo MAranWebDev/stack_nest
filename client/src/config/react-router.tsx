@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { AboutPage } from '@/pages/About.page';
+import { AdminPage } from '@/pages/Admin.page';
 import { ErrorPage } from '@/pages/Error.page';
 import { HomePage } from '@/pages/Home.page';
 import { LoginPage } from '@/pages/Login.page';
@@ -23,5 +24,9 @@ export const reactRouter = createBrowserRouter([
   {
     path: 'login',
     element: <LoginPage />,
+  },
+  {
+    path: 'admin',
+    element: <AdminPage />,
   },
 ]);
