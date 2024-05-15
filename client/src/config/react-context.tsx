@@ -9,8 +9,8 @@ export const ContextProvider = ({ children }: PropsWithChildren) => {
   return (
     <>
       {providers.reduce(
-        (Accumulator, Current) => (
-          <Current>{Accumulator}</Current>
+        (accumulator, Current) => (
+          <Current>{accumulator}</Current>
         ),
         children,
       )}
