@@ -1,12 +1,12 @@
 import { axiosApi } from '@/libs/axios';
 
+interface RegisterBodyType extends LoginBodyType {
+  name: string;
+}
+
 interface LoginBodyType {
   email: string;
   password: string;
-}
-
-interface RegisterBodyType extends LoginBodyType {
-  name: string;
 }
 
 enum URLS {
@@ -25,6 +25,8 @@ export const authService = {
   },
   async login(loginBody: LoginBodyType) {
     return axiosApi.post(URLS.LOGIN, loginBody);
+
+    // if (response.data) localStorage.setItem('jwt', JSON.stringify(response.data));
   },
   logout() {
     localStorage.removeItem(LOCAL_STORAGE.JWT);
