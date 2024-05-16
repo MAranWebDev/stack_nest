@@ -1,2 +1,2 @@
 export * from './Users.context';
-export * from './users.api';
+export * from './users.service';

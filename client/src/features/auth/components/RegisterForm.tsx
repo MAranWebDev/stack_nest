@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { authApi } from '@/features/auth';
+import { authService } from '@/features/auth';
 
 interface InputsType {
   name: string;
@@ -26,7 +26,7 @@ export const RegisterForm = () => {
   } = useForm<InputsType>();
 
   const onSubmit: SubmitHandler<InputsType> = async ({ name, email, password }) => {
-    await authApi.register({ name, email, password });
+    await authService.register({ name, email, password });
   };
 
   const inputValidations = {

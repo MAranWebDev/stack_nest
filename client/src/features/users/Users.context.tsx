@@ -1,13 +1,13 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
-export interface UsersContextType {
-  data: string[];
-}
+const initialValues = {
+  data: ['hola', 'chao'],
+};
 
-export const UsersContext = createContext<UsersContextType>({ data: [] });
+export const UsersContext = createContext(initialValues);
 
 export const UsersProvider = ({ children }: PropsWithChildren) => {
-  const [data] = useState(['hola', 'chao']);
+  const [values] = useState(initialValues);
 
-  return <UsersContext.Provider value={{ data }}>{children}</UsersContext.Provider>;
+  return <UsersContext.Provider value={{ ...values }}>{children}</UsersContext.Provider>;
 };
