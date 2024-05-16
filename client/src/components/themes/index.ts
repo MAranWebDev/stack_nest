@@ -1,1 +1,1 @@
-export * from './Main.theme';
+export * from './Mui.theme';

@@ -7,13 +7,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PropsWithChildren } from 'react';
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
+export const MuiTheme = ({ children }: PropsWithChildren) => {
+  const theme = createTheme({ palette: { mode: 'light' } });
 
-export const MainTheme = ({ children }: PropsWithChildren) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
