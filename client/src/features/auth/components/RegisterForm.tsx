@@ -3,7 +3,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { INPUTS, RegisterInputsType, authService, getRegisterValidations } from '@/features/auth';
+import { authService } from '@/features/auth/auth.service';
+import { INPUTS, RegisterInputsType } from '@/features/auth/types';
+import { getRegisterValidations } from '@/features/auth/utils';
 
 export const RegisterForm = () => {
   const {

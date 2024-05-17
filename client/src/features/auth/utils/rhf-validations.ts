@@ -1,4 +1,9 @@
-import { INPUTS, LoginReturnType, RegisterPropsType, RegisterReturnType } from '@/features/auth';
+import {
+  INPUTS,
+  LoginReturnType,
+  RegisterPropsType,
+  RegisterReturnType,
+} from '@/features/auth/types';
 
 // const REGEX = {
 //   USER: /^[A-z][A-z0-9-_]{3,23}$/,

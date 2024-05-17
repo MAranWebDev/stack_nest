@@ -3,7 +3,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { INPUTS, LoginInputsType, getLoginValidations } from '@/features/auth';
+import { INPUTS, LoginInputsType } from '@/features/auth/types';
+import { getLoginValidations } from '@/features/auth/utils';
 
 export const LoginForm = () => {
   const {
