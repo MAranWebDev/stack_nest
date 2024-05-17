@@ -3,19 +3,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { authService } from '@/features/auth';
-
-interface InputsType {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-// const REGEX = {
-//   USER: /^[A-z][A-z0-9-_]{3,23}$/,
-//   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/,
-// };
+import { INPUTS, RegisterInputsType, authService, getRegisterValidations } from '@/features/auth';
 
 export const RegisterForm = () => {
   const {
@@ -23,36 +11,12 @@ export const RegisterForm = () => {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm<InputsType>();
+  } = useForm<RegisterInputsType>();
 
-  const onSubmit: SubmitHandler<InputsType> = async ({ name, email, password }) => {
+  const registerValidations = getRegisterValidations({ getValues });
+
+  const onSubmit: SubmitHandler<RegisterInputsType> = async ({ name, email, password }) => {
     await authService.register({ name, email, password });
-  };
-
-  const inputValidations = {
-    name: {
-      required: 'Value missing',
-      minLength: {
-        value: 2,
-        message: 'minimum 2 characters',
-      },
-      maxLength: 20,
-    },
-    email: {
-      required: 'Value missing',
-    },
-    password: {
-      required: 'Value missing',
-      // pattern: REGEX.PASSWORD,
-    },
-    confirmPassword: {
-      required: 'Value missing',
-      // pattern: REGEX.PASSWORD,
-      validate: {
-        compare: (value: string) =>
-          getValues('password') === value || 'Must match password input field',
-      },
-    },
   };
 
   return (
@@ -78,15 +42,16 @@ export const RegisterForm = () => {
         required
         error={errors.name ? true : false}
         helperText={errors.name?.message}
-        {...register('name', inputValidations.name)}
+        {...register(INPUTS.NAME, registerValidations.name)}
       />
       <TextField
         sx={{ mb: 2 }}
         label="Email"
+        type="email"
         required
         error={errors.email ? true : false}
         helperText={errors.email?.message}
-        {...register('email', inputValidations.email)}
+        {...register(INPUTS.EMAIL, registerValidations.email)}
       />
       <TextField
         sx={{ mb: 2 }}
@@ -95,16 +60,16 @@ export const RegisterForm = () => {
         required
         error={errors.password ? true : false}
         helperText={errors.password?.message}
-        {...register('password', inputValidations.password)}
+        {...register(INPUTS.PASSWORD, registerValidations.password)}
       />
       <TextField
         sx={{ mb: 2 }}
         label="Confirm Password"
         type="password"
         required
-        error={errors.confirmPassword ? true : false}
-        helperText={errors.confirmPassword?.message}
-        {...register('confirmPassword', inputValidations.confirmPassword)}
+        error={errors.confirm_password ? true : false}
+        helperText={errors.confirm_password?.message}
+        {...register(INPUTS.CONFIRM_PASSWORD, registerValidations.confirm_password)}
       />
       <Button variant="contained" type="submit">
         Register

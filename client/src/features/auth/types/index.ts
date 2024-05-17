@@ -1,2 +1,2 @@
-export * from './login-inputs.type';
-export * from './register-inputs.type';
+export * from './inputs.type';
+export * from './validations.type';
