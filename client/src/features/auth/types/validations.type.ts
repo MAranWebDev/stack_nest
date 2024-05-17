@@ -1,24 +1,17 @@
 import { RegisterOptions, UseFormGetValues } from 'react-hook-form';
 
-import {
-  ConfirmPasswordInputType,
-  EmailInputType,
-  INPUTS,
-  NameInputType,
-  PasswordInputType,
-  RegisterInputsType,
-} from './inputs.type';
+import { INPUTS, LoginInputsType, RegisterInputsType } from './inputs.type';
 
 export interface RegisterPropsType {
   getValues: UseFormGetValues<RegisterInputsType>;
 }
 
 export interface LoginReturnType {
-  [INPUTS.EMAIL]: RegisterOptions<EmailInputType, INPUTS.EMAIL>;
-  [INPUTS.PASSWORD]: RegisterOptions<PasswordInputType, INPUTS.PASSWORD>;
+  [INPUTS.EMAIL]: RegisterOptions<LoginInputsType | RegisterInputsType, INPUTS.EMAIL>;
+  [INPUTS.PASSWORD]: RegisterOptions<LoginInputsType | RegisterInputsType, INPUTS.PASSWORD>;
 }
 
 export interface RegisterReturnType extends LoginReturnType {
-  [INPUTS.NAME]: RegisterOptions<NameInputType, INPUTS.NAME>;
-  [INPUTS.CONFIRM_PASSWORD]: RegisterOptions<ConfirmPasswordInputType, INPUTS.CONFIRM_PASSWORD>;
+  [INPUTS.NAME]: RegisterOptions<RegisterInputsType, INPUTS.NAME>;
+  [INPUTS.CONFIRM_PASSWORD]: RegisterOptions<RegisterInputsType, INPUTS.CONFIRM_PASSWORD>;
 }

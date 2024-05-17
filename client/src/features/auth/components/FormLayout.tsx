@@ -20,6 +20,7 @@ export const FormLayout = ({ children, onSubmit }: PropsWithChildren<PropsType>)
       }}
       component="form"
       autoComplete="off"
+      noValidate
       onSubmit={onSubmit}
     >
       {children}

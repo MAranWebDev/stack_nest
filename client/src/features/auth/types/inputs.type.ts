@@ -6,16 +6,13 @@ export enum INPUTS {
   CONFIRM_PASSWORD = 'confirm_password',
 }
 
-/* for validations */
-export type NameInputType = { [INPUTS.NAME]: string };
-export type EmailInputType = { [INPUTS.EMAIL]: string };
-export type PasswordInputType = { [INPUTS.PASSWORD]: string };
-export type ConfirmPasswordInputType = { [INPUTS.CONFIRM_PASSWORD]: string };
+/* types */
+export interface LoginInputsType {
+  [INPUTS.EMAIL]: string;
+  [INPUTS.PASSWORD]: string;
+}
 
-/* for forms */
-export interface LoginInputsType extends EmailInputType, PasswordInputType {}
-
-export interface RegisterInputsType
-  extends LoginInputsType,
-    NameInputType,
-    ConfirmPasswordInputType {}
+export interface RegisterInputsType extends LoginInputsType {
+  [INPUTS.NAME]: string;
+  [INPUTS.CONFIRM_PASSWORD]: string;
+}

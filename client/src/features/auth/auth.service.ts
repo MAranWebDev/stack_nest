@@ -21,12 +21,12 @@ enum LOCAL_STORAGE {
 
 export const authService = {
   async register(registerBody: RegisterBodyType) {
-    return axiosApi.post(URLS.REGISTER, registerBody);
+    const { data } = await axiosApi.post(URLS.REGISTER, registerBody);
+    if (data.token) localStorage.setItem(LOCAL_STORAGE.JWT, JSON.stringify(data.token));
+    return data;
   },
   async login(loginBody: LoginBodyType) {
     return axiosApi.post(URLS.LOGIN, loginBody);
-
-    // if (response.data) localStorage.setItem('jwt', JSON.stringify(response.data));
   },
   logout() {
     localStorage.removeItem(LOCAL_STORAGE.JWT);

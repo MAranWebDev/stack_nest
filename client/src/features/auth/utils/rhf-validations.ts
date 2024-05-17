@@ -5,20 +5,35 @@ import {
   RegisterReturnType,
 } from '@/features/auth/types';
 
-// const REGEX = {
-//   USER: /^[A-z][A-z0-9-_]{3,23}$/,
-//   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/,
-// };
+const REGEX = { EMAIL: /\S+@\S+\.\S+/ };
+const EMAIL_VALUES = { MAX_LENGTH: 50 };
+const NAME_VALUES = { MIN_LENGTH: 4, MAX_LENGTH: 12 };
+const PASSWORD_VALUES = { MIN_LENGTH: 4, MAX_LENGTH: 12 };
 
 /* functions */
 export const getLoginValidations = (): LoginReturnType => {
   return {
     [INPUTS.EMAIL]: {
-      required: 'Value missing',
+      required: 'Input required',
+      pattern: {
+        value: REGEX.EMAIL,
+        message: 'Input does not match email format',
+      },
+      maxLength: {
+        value: EMAIL_VALUES.MAX_LENGTH,
+        message: `maximum length is ${EMAIL_VALUES.MAX_LENGTH}`,
+      },
     },
     [INPUTS.PASSWORD]: {
-      required: 'Value missing',
-      // pattern: REGEX.PASSWORD,
+      required: 'Input required',
+      minLength: {
+        value: PASSWORD_VALUES.MIN_LENGTH,
+        message: `minimum length is ${PASSWORD_VALUES.MIN_LENGTH}`,
+      },
+      maxLength: {
+        value: PASSWORD_VALUES.MAX_LENGTH,
+        message: `maximum length is ${PASSWORD_VALUES.MAX_LENGTH}`,
+      },
     },
   };
 };
@@ -29,19 +44,21 @@ export const getRegisterValidations = ({ getValues }: RegisterPropsType): Regist
   return {
     ...loginValidations,
     [INPUTS.NAME]: {
-      required: 'Value missing',
+      required: 'Input required',
       minLength: {
-        value: 2,
-        message: 'minimum 2 characters',
+        value: NAME_VALUES.MIN_LENGTH,
+        message: `minimum length is ${NAME_VALUES.MIN_LENGTH}`,
       },
-      maxLength: 20,
+      maxLength: {
+        value: NAME_VALUES.MAX_LENGTH,
+        message: `maximum length is ${NAME_VALUES.MAX_LENGTH}`,
+      },
     },
     [INPUTS.CONFIRM_PASSWORD]: {
-      required: 'Value missing',
-      // pattern: REGEX.PASSWORD,
+      ...loginValidations.password,
       validate: {
-        compare: (value: string) =>
-          getValues(INPUTS.PASSWORD) === value || 'Must match password input field',
+        comparePasswords: (value: string) =>
+          getValues(INPUTS.PASSWORD) === value || 'Must match password',
       },
     },
   };
