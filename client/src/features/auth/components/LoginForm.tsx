@@ -1,10 +1,11 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { INPUTS, LoginInputsType } from '@/features/auth/types';
 import { getLoginValidations } from '@/features/auth/utils';
+
+import { FormLayout } from './FormLayout';
 
 export const LoginForm = () => {
   const {
@@ -18,7 +19,7 @@ export const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginInputsType> = async () => {};
 
   return (
-    <Box component="form" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <FormLayout onSubmit={handleSubmit(onSubmit)}>
       <TextField
         sx={{ mb: 2 }}
         label="Email"
@@ -40,6 +41,6 @@ export const LoginForm = () => {
       <Button variant="contained" type="submit">
         Login
       </Button>
-    </Box>
+    </FormLayout>
   );
 };

@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -6,6 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { authService } from '@/features/auth/auth.service';
 import { INPUTS, RegisterInputsType } from '@/features/auth/types';
 import { getRegisterValidations } from '@/features/auth/utils';
+
+import { FormLayout } from './FormLayout';
 
 export const RegisterForm = () => {
   const {
@@ -22,22 +23,7 @@ export const RegisterForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        mx: 'auto',
-        p: 6,
-        width: 500,
-        border: 1,
-        borderRadius: 1,
-        borderColor: 'text.disabled',
-      }}
-      component="form"
-      autoComplete="off"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <FormLayout onSubmit={handleSubmit(onSubmit)}>
       <TextField
         sx={{ mb: 2 }}
         label="Name"
@@ -76,6 +62,6 @@ export const RegisterForm = () => {
       <Button variant="contained" type="submit">
         Register
       </Button>
-    </Box>
+    </FormLayout>
   );
 };
