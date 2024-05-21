@@ -19,13 +19,13 @@ export const RegisterForm = () => {
   const registerValidations = getRegisterValidations({ getValues });
 
   const onSubmit: SubmitHandler<RegisterInputsType> = async ({ name, email, password }) => {
-    await authService.register({ name, email, password });
+    const response = await authService.register({ name, email, password });
+    console.log(response);
   };
 
   return (
     <FormLayout onSubmit={handleSubmit(onSubmit)}>
       <TextField
-        sx={{ mb: 2 }}
         label="Name"
         required
         error={errors.name ? true : false}
@@ -33,7 +33,6 @@ export const RegisterForm = () => {
         {...register(INPUTS.NAME, registerValidations.name)}
       />
       <TextField
-        sx={{ mb: 2 }}
         label="Email"
         type="email"
         required
@@ -42,7 +41,6 @@ export const RegisterForm = () => {
         {...register(INPUTS.EMAIL, registerValidations.email)}
       />
       <TextField
-        sx={{ mb: 2 }}
         label="Password"
         type="password"
         required
@@ -51,7 +49,6 @@ export const RegisterForm = () => {
         {...register(INPUTS.PASSWORD, registerValidations.password)}
       />
       <TextField
-        sx={{ mb: 2 }}
         label="Confirm Password"
         type="password"
         required

@@ -1,17 +1,21 @@
-import {
-  INPUTS,
-  LoginReturnType,
-  RegisterPropsType,
-  RegisterReturnType,
-} from '@/features/auth/types';
+import { FieldValues, RegisterOptions, UseFormGetValues } from 'react-hook-form';
+
+import { INPUTS, RegisterInputsType } from '@/features/auth/types';
+
+interface RegisterPropsType {
+  getValues: UseFormGetValues<RegisterInputsType>;
+}
+
+interface ReturnType {
+  [key: string]: RegisterOptions<FieldValues, `${INPUTS}`>;
+}
 
 const REGEX = { EMAIL: /\S+@\S+\.\S+/ };
 const EMAIL_VALUES = { MAX_LENGTH: 50 };
 const NAME_VALUES = { MIN_LENGTH: 4, MAX_LENGTH: 12 };
 const PASSWORD_VALUES = { MIN_LENGTH: 4, MAX_LENGTH: 12 };
 
-/* functions */
-export const getLoginValidations = (): LoginReturnType => {
+export const getLoginValidations = (): ReturnType => {
   return {
     [INPUTS.EMAIL]: {
       required: 'Input required',
@@ -38,7 +42,7 @@ export const getLoginValidations = (): LoginReturnType => {
   };
 };
 
-export const getRegisterValidations = ({ getValues }: RegisterPropsType): RegisterReturnType => {
+export const getRegisterValidations = ({ getValues }: RegisterPropsType): ReturnType => {
   const loginValidations = getLoginValidations();
 
   return {

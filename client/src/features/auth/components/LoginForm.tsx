@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { authService } from '@/features/auth/auth.service';
 import { INPUTS, LoginInputsType } from '@/features/auth/types';
 import { getLoginValidations } from '@/features/auth/utils';
 
@@ -16,12 +17,14 @@ export const LoginForm = () => {
 
   const loginValidations = getLoginValidations();
 
-  const onSubmit: SubmitHandler<LoginInputsType> = async () => {};
+  const onSubmit: SubmitHandler<LoginInputsType> = async ({ email, password }) => {
+    const response = await authService.login({ email, password });
+    console.log(response);
+  };
 
   return (
     <FormLayout onSubmit={handleSubmit(onSubmit)}>
       <TextField
-        sx={{ mb: 2 }}
         label="Email"
         type="email"
         required
@@ -30,7 +33,6 @@ export const LoginForm = () => {
         {...register(INPUTS.EMAIL, loginValidations.email)}
       />
       <TextField
-        sx={{ mb: 2 }}
         label="Password"
         type="password"
         required

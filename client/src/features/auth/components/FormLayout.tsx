@@ -1,3 +1,4 @@
+import { Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import { FormEventHandler, PropsWithChildren } from 'react';
 
@@ -9,8 +10,6 @@ export const FormLayout = ({ children, onSubmit }: PropsWithChildren<PropsType>)
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
         mx: 'auto',
         p: 6,
         width: 500,
@@ -23,7 +22,7 @@ export const FormLayout = ({ children, onSubmit }: PropsWithChildren<PropsType>)
       noValidate
       onSubmit={onSubmit}
     >
-      {children}
+      <Stack spacing={2}>{children}</Stack>
     </Box>
   );
 };
