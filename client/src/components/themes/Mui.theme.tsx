@@ -7,13 +7,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PropsWithChildren } from 'react';
 
+import { LoadingLayout } from '@/features/loading/components';
+
 export const MuiTheme = ({ children }: PropsWithChildren) => {
   const theme = createTheme({ palette: { mode: 'light' } });
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {children}
+      <LoadingLayout>{children}</LoadingLayout>
     </ThemeProvider>
   );
 };
