@@ -1,14 +1,16 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
-const initialValues = {
+const contextInitialValues = {
   jwt: '',
   user: '',
 };
 
-export const AuthContext = createContext(initialValues);
+export const AuthContext = createContext(contextInitialValues);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [values] = useState(initialValues);
+  const [values] = useState(contextInitialValues);
 
-  return <AuthContext.Provider value={{ ...values }}>{children}</AuthContext.Provider>;
+  const providerValues = { ...values };
+
+  return <AuthContext.Provider value={providerValues}>{children}</AuthContext.Provider>;
 };
