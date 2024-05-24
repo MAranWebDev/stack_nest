@@ -10,11 +10,8 @@ import { MuiThemeProvider } from './config/themes';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ReactQueryProvider>
-      {/* needs react query */}
       <ReactContextProvider>
-        {/* needs react context */}
         <MuiThemeProvider>
-          {/* needs all providers */}
           <RouterProvider router={reactRouter} />
         </MuiThemeProvider>
       </ReactContextProvider>
