@@ -3,7 +3,7 @@ import { PropsWithChildren, createContext, useCallback, useState } from 'react';
 interface StateInitialValuesType {
   isPending: boolean;
   isError: boolean;
-  error: Error | null;
+  errorMessage: string;
 }
 
 interface ContextInitialValuesType extends StateInitialValuesType {
@@ -15,7 +15,7 @@ type PropsType = Partial<StateInitialValuesType>;
 const stateInitialValues: StateInitialValuesType = {
   isPending: false,
   isError: false,
-  error: null,
+  errorMessage: '',
 };
 
 const contextInitialValues: ContextInitialValuesType = {
@@ -33,10 +33,7 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     [],
   );
 
-  const providerValues = {
-    ...values,
-    changeValues,
-  };
+  const providerValues = { ...values, changeValues };
 
   return <LoadingContext.Provider value={providerValues}>{children}</LoadingContext.Provider>;
 };
