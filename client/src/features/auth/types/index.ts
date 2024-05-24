@@ -1,2 +1,2 @@
 export * from './inputs.type';
-export * from './roles.enum';
+export * from './roles.type';
