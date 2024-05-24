@@ -11,12 +11,7 @@ export const UnauthorizedPage = () => {
 
   return (
     <Stack
-      sx={{
-        height: '100vh',
-        alignItems: 'center',
-        justifyContent: 'center',
-        mx: '10%',
-      }}
+      sx={{ height: '100vh', alignItems: 'center', justifyContent: 'center', mx: '10%' }}
       spacing={2}
       component="main"
     >
