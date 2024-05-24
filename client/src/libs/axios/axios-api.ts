@@ -6,6 +6,6 @@ export const axiosApi = axios.create({ baseURL: VITE_API_URL });
 
 export const axiosApiPrivate = axios.create({
   baseURL: VITE_API_URL,
-  withCredentials: true,
+  withCredentials: true, // Como funciona esto?
   headers: { 'Content-Type': 'application/json' },
 });
