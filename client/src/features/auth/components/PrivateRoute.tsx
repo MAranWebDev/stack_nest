@@ -12,13 +12,9 @@ export const PrivateRoute = ({ role }: PropsType) => {
   const { userRole } = useContext(AuthContext);
   const currentLocation = useLocation();
 
-  return (
-    <>
-      {userRole === role ? (
-        <Outlet />
-      ) : (
-        <Navigate to="/unauthorized" state={{ from: currentLocation }} replace />
-      )}
-    </>
+  return userRole !== role ? (
+    <Navigate to="/unauthorized" state={{ from: currentLocation }} replace />
+  ) : (
+    <Outlet />
   );
 };
