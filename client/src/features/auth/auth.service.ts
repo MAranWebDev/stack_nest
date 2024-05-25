@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios';
+
 import { axiosApi } from '@/libs/axios';
 
 interface RegisterBodyType extends LoginBodyType {
@@ -21,9 +23,15 @@ enum LOCAL_STORAGE {
 
 export const authService = {
   async register(registerBody: RegisterBodyType) {
-    const { data } = await axiosApi.post(URLS.REGISTER, registerBody);
-    if (data.token) localStorage.setItem(LOCAL_STORAGE.JWT, JSON.stringify(data.token));
-    return data;
+    try {
+      const { data } = await axiosApi.post(URLS.REGISTER, registerBody);
+      if (data.token) localStorage.setItem(LOCAL_STORAGE.JWT, JSON.stringify(data.token));
+      return data;
+    } catch (error) {
+      if (!isAxiosError(error)) throw new Error('Something went wrong!');
+      if (error.response) throw new Error(error.response.data.message);
+      throw new Error(error.message);
+    }
   },
   async login(loginBody: LoginBodyType) {
     return axiosApi.post(URLS.LOGIN, loginBody);
