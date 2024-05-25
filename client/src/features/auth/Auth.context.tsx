@@ -3,6 +3,7 @@ import { PropsWithChildren, createContext, useState } from 'react';
 const contextInitialValues = {
   jwt: '',
   user: '',
+  userRole: '',
 };
 
 export const AuthContext = createContext(contextInitialValues);

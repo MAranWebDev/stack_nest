@@ -1,7 +1,9 @@
+import { MainLayout } from '@/components/layouts';
+
 export const AdminPage = () => {
   return (
-    <main>
+    <MainLayout>
       <h1>Admin Page</h1>
-    </main>
+    </MainLayout>
   );
 };

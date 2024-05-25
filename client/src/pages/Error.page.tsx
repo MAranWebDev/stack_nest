@@ -1,7 +1,9 @@
+import { MainLayout } from '@/components/layouts';
+
 export const ErrorPage = () => {
   return (
-    <main>
+    <MainLayout>
       <h1>Error page</h1>
-    </main>
+    </MainLayout>
   );
 };

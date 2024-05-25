@@ -1,10 +1,11 @@
+import { MainLayout } from '@/components/layouts';
 import { RegisterForm } from '@/features/auth/components';
 
 export const RegisterPage = () => {
   return (
-    <main>
+    <MainLayout>
       <h1>Register</h1>
       <RegisterForm />
-    </main>
+    </MainLayout>
   );
 };
