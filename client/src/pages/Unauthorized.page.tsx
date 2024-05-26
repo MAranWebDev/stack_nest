@@ -14,8 +14,6 @@ export const UnauthorizedPage = () => {
   const currentLocation = useLocation();
   const fromPathname = currentLocation.state?.from?.pathname;
 
-  const goBack = () => navigate(-1);
-
   return !fromPathname ? (
     <Navigate to="/login" state={{ from: currentLocation }} replace />
   ) : (
@@ -30,12 +28,12 @@ export const UnauthorizedPage = () => {
         </Typography>
         <Divider flexItem />
         <p>
-          You do not have access to:{' '}
+          <span>You do not have access to: </span>
           <Typography sx={{ color: 'text.secondary' }} component="span" variant="subtitle2">
             {BASE_URL + fromPathname}
           </Typography>
         </p>
-        <Button variant="contained" endIcon={<ExitToAppIcon />} onClick={goBack}>
+        <Button variant="contained" endIcon={<ExitToAppIcon />} onClick={() => navigate(-1)}>
           Go Back
         </Button>
       </Stack>

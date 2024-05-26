@@ -1,26 +1,33 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useMutation } from '@tanstack/react-query';
+import { useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { authService } from '@/features/auth/auth.service';
 import { INPUTS, RegisterInputsType } from '@/features/auth/types';
 import { getRegisterValidations } from '@/features/auth/utils';
+import { LoadingContext } from '@/features/loading/Loading.context';
 
 import { FormLayout } from './FormLayout';
 
 export const RegisterForm = () => {
+  const { changeValues } = useContext(LoadingContext);
+  const { isPending, isError, error, mutate } = useMutation({ mutationFn: authService.register });
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
   } = useForm<RegisterInputsType>();
-
   const registerValidations = getRegisterValidations({ getValues });
 
+  useEffect(() => {
+    changeValues({ isPending, isError, errorMessage: error?.message });
+  }, [isPending, isError, error, changeValues]);
+
   const onSubmit: SubmitHandler<RegisterInputsType> = async ({ name, email, password }) => {
-    const response = await authService.register({ name, email, password });
-    console.log(response);
+    mutate({ name, email, password });
   };
 
   return (
