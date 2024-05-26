@@ -1,5 +1,7 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
+import { LOCAL_STORAGE } from './types';
+
 interface StateInitialValuesType {
   jwt: string | null;
   user: string | null;
@@ -13,9 +15,9 @@ interface ContextInitialValuesType extends StateInitialValuesType {
 type PropsType = Partial<StateInitialValuesType>;
 
 const stateInitialValues: StateInitialValuesType = {
-  jwt: localStorage.getItem('jwt'),
-  user: localStorage.getItem('user'),
-  userRole: localStorage.getItem('role'),
+  jwt: localStorage.getItem(LOCAL_STORAGE.JWT),
+  user: localStorage.getItem(LOCAL_STORAGE.USER),
+  userRole: localStorage.getItem(LOCAL_STORAGE.ROLE),
 };
 
 const contextInitialValues: ContextInitialValuesType = {
