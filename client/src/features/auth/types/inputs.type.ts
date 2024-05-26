@@ -16,3 +16,5 @@ export interface RegisterInputsType extends LoginInputsType {
   [INPUTS.NAME]: string;
   [INPUTS.CONFIRM_PASSWORD]: string;
 }
+
+export interface RegisterBodyType extends Omit<RegisterInputsType, INPUTS.CONFIRM_PASSWORD> {}
