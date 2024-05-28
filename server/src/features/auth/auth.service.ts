@@ -29,7 +29,13 @@ export class AuthService {
     const isMatch = await bcrypt.compare(logUserDto.password, user.password);
     if (!isMatch) throw new BadRequestException('Password does not match');
 
-    const payload = { id: user._id, name: user.name };
+    const payload = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
     const jwt = await this.jwtService.signAsync(payload);
     return { token: jwt };
   }

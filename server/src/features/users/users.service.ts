@@ -13,11 +13,11 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    return this.usersModel.create(createUserDto);
+    return this.usersModel.create({ ...createUserDto, role: 'DEFAULT' });
   }
 
   async findAll() {
-    return this.usersModel.find().exec();
+    return this.usersModel.find().select('-password').exec();
   }
 
   async findOneByEmail(email: string) {
