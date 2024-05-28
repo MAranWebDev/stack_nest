@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
 
 import { CreateSampleDto, UpdateSampleDto } from '@/features/sample/dtos';
-import { SAMPLE_QUEUE } from '@/features/sample/sample.processor';
+import { SAMPLE_QUEUE } from '@/features/sample/types';
 
 @Injectable()
 export class SampleQueueService {

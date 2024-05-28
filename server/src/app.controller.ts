@@ -2,9 +2,13 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AppService } from './app.service';
-import { Public } from './features/auth/public.decorator';
+import { Public } from './features/auth/decorators/public.decorator';
 
-@ApiTags('root')
+enum ROUTES {
+  ROOT = 'root',
+}
+
+@ApiTags(ROUTES.ROOT)
 @Public()
 @Controller()
 export class AppController {

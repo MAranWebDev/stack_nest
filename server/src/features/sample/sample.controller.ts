@@ -5,9 +5,13 @@ import { CreateSampleDto, UpdateSampleDto } from './dtos';
 import { SampleQueueService } from './services/sample-queue.service';
 import { SampleService } from './services/sample.service';
 
-@ApiTags('sample')
+enum ROUTES {
+  SAMPLE = 'sample',
+}
+
+@ApiTags(ROUTES.SAMPLE)
 @ApiBearerAuth()
-@Controller('sample')
+@Controller(ROUTES.SAMPLE)
 export class SampleController {
   constructor(
     private readonly sampleService: SampleService,
