@@ -1,14 +1,14 @@
 import { isAxiosError } from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 import { axiosApi } from '@/libs/axios';
 
-interface RegisterBodyType extends LoginBodyType {
+import { LOCAL_STORAGE, LoginInputsType, RegisterBodyType } from './types';
+interface JwtType {
+  id: string;
   name: string;
-}
-
-interface LoginBodyType {
   email: string;
-  password: string;
+  role: string;
 }
 
 enum URLS {
@@ -16,28 +16,49 @@ enum URLS {
   LOGIN = '/auth/login',
 }
 
-enum LOCAL_STORAGE {
-  JWT = 'jwt',
-  USER = 'user',
-}
+const helpers = {
+  _handleJwt(jwt: string) {
+    const decodedJwt: JwtType = jwtDecode(jwt);
+    localStorage.setItem(LOCAL_STORAGE.JWT, jwt);
+    localStorage.setItem(LOCAL_STORAGE.USER, decodedJwt.name);
+    localStorage.setItem(LOCAL_STORAGE.ROLE, decodedJwt.role);
+
+    return { ...decodedJwt, token: jwt };
+  },
+
+  _handleErrorResponse(error: unknown) {
+    if (!isAxiosError(error)) return new Error('Something went wrong!');
+    if (error.response) return new Error(error.response.data.message);
+    return new Error(error.message);
+  },
+};
 
 export const authService = {
   async register(registerBody: RegisterBodyType) {
     try {
-      const { data } = await axiosApi.post(URLS.REGISTER, registerBody);
-      if (data.token) localStorage.setItem(LOCAL_STORAGE.JWT, JSON.stringify(data.token));
-      return data;
+      const {
+        data: { token },
+      } = await axiosApi.post(URLS.REGISTER, registerBody);
+      if (token) return helpers._handleJwt(token);
+      throw Error();
     } catch (error) {
-      if (!isAxiosError(error)) throw new Error('Something went wrong!');
-      if (error.response) throw new Error(error.response.data.message);
-      throw new Error(error.message);
+      throw helpers._handleErrorResponse(error);
     }
   },
-  async login(loginBody: LoginBodyType) {
-    return axiosApi.post(URLS.LOGIN, loginBody);
+
+  async login(loginBody: LoginInputsType) {
+    try {
+      const {
+        data: { token },
+      } = await axiosApi.post(URLS.LOGIN, loginBody);
+      if (token) return helpers._handleJwt(token);
+      throw Error();
+    } catch (error) {
+      throw helpers._handleErrorResponse(error);
+    }
   },
+
   logout() {
-    localStorage.removeItem(LOCAL_STORAGE.JWT);
-    localStorage.removeItem(LOCAL_STORAGE.USER);
+    localStorage.clear();
   },
 };
