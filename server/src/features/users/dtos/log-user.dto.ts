@@ -7,6 +7,6 @@ export class LogUserDto {
 
   @IsString()
   @MinLength(4)
-  @MaxLength(12)
+  @MaxLength(10)
   password: string;
 }

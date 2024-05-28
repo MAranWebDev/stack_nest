@@ -20,6 +20,5 @@
 
     /* absolute path */
     "paths": { "@/*": ["./src/*"] }
-  },
-  "include": ["./src", "./test"] /* fix tsconfig error*/
+  }
 }

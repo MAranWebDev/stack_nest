@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateSampleDto, UpdateSampleDto } from '@/features/sample/dtos';
-import { Sample } from '@/features/sample/sample.schema';
+import { Sample } from '@/features/sample/schemas';
 
 @Injectable()
 export class SampleService {
