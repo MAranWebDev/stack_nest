@@ -2,8 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateSampleDto, UpdateSampleDto } from './dtos';
-import { SampleQueueService } from './services/sample-queue.service';
-import { SampleService } from './services/sample.service';
+import { SampleQueueService, SampleService } from './services';
 
 enum ROUTES {
   SAMPLE = 'sample',
