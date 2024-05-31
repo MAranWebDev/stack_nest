@@ -3,13 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import { axiosApi } from '@/libs/axios';
 
-import { LOCAL_STORAGE, LoginInputsType, RegisterBodyType } from './types';
-interface JwtType {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
+import { DecodedJwtType, LOCAL_STORAGE, LoginBodyType, RegisterBodyType } from './types';
 
 enum URLS {
   REGISTER = '/auth/register',
@@ -18,7 +12,7 @@ enum URLS {
 
 const helpers = {
   _handleJwt(jwt: string) {
-    const decodedJwt: JwtType = jwtDecode(jwt);
+    const decodedJwt: DecodedJwtType = jwtDecode(jwt);
     localStorage.setItem(LOCAL_STORAGE.JWT, jwt);
     localStorage.setItem(LOCAL_STORAGE.USER, decodedJwt.name);
     localStorage.setItem(LOCAL_STORAGE.ROLE, decodedJwt.role);
@@ -46,7 +40,7 @@ export const authService = {
     }
   },
 
-  async login(loginBody: LoginInputsType) {
+  async login(loginBody: LoginBodyType) {
     try {
       const {
         data: { token },
