@@ -1,69 +1,64 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { useMutation } from '@tanstack/react-query';
-import { useContext, useEffect } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { authService } from '@/features/auth/auth.service';
-import { INPUTS, RegisterInputsType } from '@/features/auth/types';
-import { getRegisterValidations } from '@/features/auth/utils';
-import { LoadingContext } from '@/features/loading/Loading.context';
+import { useAuthForm } from '@/features/auth/hooks';
+import { INPUTS } from '@/features/auth/types';
 
 import { FormLayout } from './FormLayout';
 
 export const RegisterForm = () => {
-  const { changeValues } = useContext(LoadingContext);
-  const { isPending, isError, error, mutate } = useMutation({ mutationFn: authService.register });
   const {
     register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm<RegisterInputsType>();
-  const registerValidations = getRegisterValidations({ getValues });
-
-  useEffect(() => {
-    changeValues({ isPending, isError, errorMessage: error?.message });
-  }, [isPending, isError, error, changeValues]);
-
-  const onSubmit: SubmitHandler<RegisterInputsType> = async ({ name, email, password }) => {
-    mutate({ name, email, password });
-  };
+    formSubmitHandler,
+    formValidations,
+    formErrors,
+    isFormEmpty,
+    isServerError,
+    isServerPending,
+  } = useAuthForm('register');
 
   return (
-    <FormLayout onSubmit={handleSubmit(onSubmit)}>
+    <FormLayout onSubmit={formSubmitHandler}>
       <TextField
         label="Name"
+        disabled={isServerError}
         required
-        error={errors.name ? true : false}
-        helperText={errors.name?.message}
-        {...register(INPUTS.NAME, registerValidations.name)}
+        error={!!formErrors.name}
+        helperText={formErrors.name?.message}
+        {...register(INPUTS.NAME, formValidations.name)}
       />
       <TextField
         label="Email"
         type="email"
+        disabled={isServerError}
         required
-        error={errors.email ? true : false}
-        helperText={errors.email?.message}
-        {...register(INPUTS.EMAIL, registerValidations.email)}
+        error={!!formErrors.email}
+        helperText={formErrors.email?.message}
+        {...register(INPUTS.EMAIL, formValidations.email)}
       />
       <TextField
         label="Password"
         type="password"
+        disabled={isServerError}
         required
-        error={errors.password ? true : false}
-        helperText={errors.password?.message}
-        {...register(INPUTS.PASSWORD, registerValidations.password)}
+        error={!!formErrors.password}
+        helperText={formErrors.password?.message}
+        {...register(INPUTS.PASSWORD, formValidations.password)}
       />
       <TextField
         label="Confirm Password"
         type="password"
+        disabled={isServerError}
         required
-        error={errors.confirm_password ? true : false}
-        helperText={errors.confirm_password?.message}
-        {...register(INPUTS.CONFIRM_PASSWORD, registerValidations.confirm_password)}
+        error={!!formErrors.confirm_password}
+        helperText={formErrors.confirm_password?.message}
+        {...register(INPUTS.CONFIRM_PASSWORD, formValidations.confirm_password)}
       />
-      <Button variant="contained" type="submit">
+      <Button
+        variant="contained"
+        type="submit"
+        disabled={isFormEmpty || isServerPending || isServerError}
+      >
         Register
       </Button>
     </FormLayout>
