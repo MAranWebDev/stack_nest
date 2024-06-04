@@ -19,7 +19,7 @@ export const useAuthForm = (action: ActionType) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
 
   const { handleLoader: handleLoadingState, isError, isPending } = useContext(NavbarContext);
-  const { changeValues: handleAuthState } = useContext(AuthContext);
+  const { handleValues: handleAuthState } = useContext(AuthContext);
 
   const { mutate } = useMutation({
     mutationFn: condition ? authService.login : authService.register,
