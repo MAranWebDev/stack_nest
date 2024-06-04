@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useCallback, useState } from 'react';
+import { PropsWithChildren, createContext, useState } from 'react';
 
 interface StateInitialValuesType {
   isPending: boolean;
@@ -23,17 +23,14 @@ const contextInitialValues: ContextInitialValuesType = {
   changeValues: () => {},
 };
 
-export const LoadingContext = createContext(contextInitialValues);
+export const LoadingBarContext = createContext(contextInitialValues);
 
-export const LoadingProvider = ({ children }: PropsWithChildren) => {
+export const LoadingBarProvider = ({ children }: PropsWithChildren) => {
   const [values, setValues] = useState(stateInitialValues);
 
-  const changeValues = useCallback(
-    (props: PropsType) => setValues((prevState) => ({ ...prevState, ...props })),
-    [],
-  );
+  const changeValues = (props: PropsType) => setValues((prevState) => ({ ...prevState, ...props }));
 
   const providerValues = { ...values, changeValues };
 
-  return <LoadingContext.Provider value={providerValues}>{children}</LoadingContext.Provider>;
+  return <LoadingBarContext.Provider value={providerValues}>{children}</LoadingBarContext.Provider>;
 };
