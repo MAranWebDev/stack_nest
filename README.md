@@ -13,3 +13,4 @@
 - add credentials to redis
 - fix bull-board url
 - change enums const TEST = { HELLO: 1, BYE: 3, MIRA: 4 } as const; type TEST = (typeof TEST)[keyof typeof TEST];
+- hushky
