@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "check:types": "tsc --noemit",
+    "eslint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "npm run check:types && npm run eslint",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/{*.ts,*.tsx}\""
   },
@@ -16,7 +18,7 @@
     "@fontsource/roboto": "^5.0.13",
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.19",
-    "@tanstack/react-query": "^5.39.0",
+    "@tanstack/react-query": "^5.40.1",
     "axios": "^1.7.2",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
