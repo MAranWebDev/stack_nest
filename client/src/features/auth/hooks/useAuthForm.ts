@@ -6,7 +6,7 @@ import { AuthContext } from '@/features/auth/Auth.context';
 import { authService } from '@/features/auth/auth.service';
 import { INPUTS, RegisterInputsType } from '@/features/auth/types';
 import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
-import { LoadingContext } from '@/features/loading/Loading.context';
+import { LoadingBarContext } from '@/features/loading-bar/LoadingBar.context';
 
 type ActionType = `${ACTIONS}`;
 
@@ -18,7 +18,7 @@ enum ACTIONS {
 export const useAuthForm = (action: ActionType) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
 
-  const { changeValues: changeLoadingState, isError, isPending } = useContext(LoadingContext);
+  const { changeValues: changeLoadingState, isError, isPending } = useContext(LoadingBarContext);
   const { changeValues: changeAuthState } = useContext(AuthContext);
 
   const { mutate } = useMutation({

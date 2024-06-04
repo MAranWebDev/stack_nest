@@ -5,7 +5,7 @@ import { useContext } from 'react';
 
 import { LoadingBarContext } from '@/features/loading-bar/LoadingBar.context';
 
-export const Loading = () => {
+export const LoadingBar = () => {
   const { isPending, isError, errorMessage, changeValues } = useContext(LoadingBarContext);
 
   const onClose = () => changeValues({ isError: false, errorMessage: '' });
