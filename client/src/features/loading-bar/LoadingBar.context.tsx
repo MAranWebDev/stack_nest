@@ -1,22 +1,13 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
-interface StateInitialValuesType {
-  isPending: boolean;
-  isError: boolean;
-  errorMessage: string;
-}
+type StateInitialValuesType = typeof stateInitialValues;
+type ValuesType = Partial<StateInitialValuesType>;
 
 interface ContextInitialValuesType extends StateInitialValuesType {
-  changeValues: (props: PropsType) => void;
+  changeValues: (values: ValuesType) => void;
 }
 
-type PropsType = Partial<StateInitialValuesType>;
-
-const stateInitialValues: StateInitialValuesType = {
-  isPending: false,
-  isError: false,
-  errorMessage: '',
-};
+const stateInitialValues = { isPending: false, isError: false, errorMessage: '' };
 
 const contextInitialValues: ContextInitialValuesType = {
   ...stateInitialValues,
@@ -28,7 +19,8 @@ export const LoadingBarContext = createContext(contextInitialValues);
 export const LoadingBarProvider = ({ children }: PropsWithChildren) => {
   const [values, setValues] = useState(stateInitialValues);
 
-  const changeValues = (props: PropsType) => setValues((prevState) => ({ ...prevState, ...props }));
+  const changeValues = (values: ValuesType) =>
+    setValues((prevState) => ({ ...prevState, ...values }));
 
   const providerValues = { ...values, changeValues };
 
