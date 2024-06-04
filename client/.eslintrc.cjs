@@ -24,9 +24,9 @@ module.exports = {
     'import/order': [
       'error',
       {
-        pathGroups: [{ pattern: '@/**', group: 'external', position: 'after' }],
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
-        alphabetize: { order: 'asc', caseInsensitive: true },
+        pathGroups: [{ pattern: '@/**', group: 'external', position: 'after' }],
+        alphabetize: { order: 'asc', caseInsensitive: false },
         'newlines-between': 'always',
       },
     ],
