@@ -53,6 +53,7 @@ export const authService = {
   },
 
   logout() {
-    localStorage.clear();
+    const keysToRemove = [LOCAL_STORAGE.JWT, LOCAL_STORAGE.ROLE, LOCAL_STORAGE.USER];
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
   },
 };
