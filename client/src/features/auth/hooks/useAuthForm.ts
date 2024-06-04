@@ -6,7 +6,7 @@ import { AuthContext } from '@/features/auth/Auth.context';
 import { authService } from '@/features/auth/auth.service';
 import { INPUTS, RegisterInputsType } from '@/features/auth/types';
 import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
-import { LoadingBarContext } from '@/features/loading-bar/LoadingBar.context';
+import { NavbarContext } from '@/features/navbar/Navbar.context';
 
 type ActionType = `${ACTIONS}`;
 
@@ -18,22 +18,22 @@ enum ACTIONS {
 export const useAuthForm = (action: ActionType) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
 
-  const { changeValues: changeLoadingState, isError, isPending } = useContext(LoadingBarContext);
-  const { changeValues: changeAuthState } = useContext(AuthContext);
+  const { handleLoader: handleLoadingState, isError, isPending } = useContext(NavbarContext);
+  const { changeValues: handleAuthState } = useContext(AuthContext);
 
   const { mutate } = useMutation({
     mutationFn: condition ? authService.login : authService.register,
     onMutate: () => {
-      changeLoadingState({ isPending: true });
+      handleLoadingState({ isPending: true });
     },
     onSettled: () => {
-      changeLoadingState({ isPending: false });
+      handleLoadingState({ isPending: false });
     },
     onSuccess: ({ token, name, role }) => {
-      changeAuthState({ jwt: token, user: name, userRole: role });
+      handleAuthState({ jwt: token, user: name, userRole: role });
     },
     onError: ({ message }) => {
-      changeLoadingState({ isError: true, errorMessage: message });
+      handleLoadingState({ isError: true, errorMessage: message });
     },
   });
 
