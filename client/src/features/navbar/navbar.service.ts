@@ -1,6 +1,6 @@
 import { LOCAL_STORAGE } from './utils';
 
-export const navBarService = {
+export const navbarService = {
   persist(isDarkMode: boolean) {
     isDarkMode
       ? localStorage.setItem(LOCAL_STORAGE.IS_DARK_MODE, 'true')

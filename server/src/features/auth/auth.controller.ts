@@ -6,11 +6,11 @@ import { CreateUserDto, LogUserDto } from '@/features/users/dtos';
 import { AuthService } from './auth.service';
 import { Public } from './decorators';
 
-enum ROUTES {
-  AUTH = 'auth',
-  REGISTER = 'register',
-  LOGIN = 'login',
-}
+const ROUTES = {
+  AUTH: 'auth',
+  REGISTER: 'register',
+  LOGIN: 'login',
+} as const;
 
 @ApiTags(ROUTES.AUTH)
 @Public()

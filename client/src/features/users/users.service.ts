@@ -1,8 +1,8 @@
 import { axiosApiPrivate } from '@/libs/axios';
 
-enum URLS {
-  FIND_ALL = '/users',
-}
+const URLS = {
+  FIND_ALL: '/users',
+} as const;
 
 export const usersService = {
   async findAll() {

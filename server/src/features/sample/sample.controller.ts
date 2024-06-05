@@ -4,9 +4,9 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateSampleDto, UpdateSampleDto } from './dtos';
 import { SampleQueueService, SampleService } from './services';
 
-enum ROUTES {
-  SAMPLE = 'sample',
-}
+const ROUTES = {
+  SAMPLE: 'sample',
+} as const;
 
 @ApiTags(ROUTES.SAMPLE)
 @ApiBearerAuth()

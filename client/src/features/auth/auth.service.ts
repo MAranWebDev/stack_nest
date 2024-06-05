@@ -5,10 +5,10 @@ import { axiosApi } from '@/libs/axios';
 
 import { DecodedJwtType, LOCAL_STORAGE, LoginBodyType, RegisterBodyType } from './types';
 
-enum URLS {
-  REGISTER = '/auth/register',
-  LOGIN = '/auth/login',
-}
+const URLS = {
+  REGISTER: '/auth/register',
+  LOGIN: '/auth/login',
+} as const;
 
 const helpers = {
   _handleJwt(jwt: string) {

@@ -4,9 +4,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { Public } from './features/auth/decorators';
 
-enum ROUTES {
-  ROOT = 'root',
-}
+const ROUTES = {
+  ROOT: 'root',
+} as const;
 
 @ApiTags(ROUTES.ROOT)
 @Public()

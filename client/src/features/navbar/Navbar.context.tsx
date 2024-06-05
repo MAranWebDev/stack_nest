@@ -1,11 +1,10 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
-import { navBarService } from './navbar.service';
+import { navbarService } from './navbar.service';
 import { LOCAL_STORAGE } from './utils';
 
 type StateInitialValuesType = typeof stateInitialValues;
 type LoaderValuesType = Omit<Partial<StateInitialValuesType>, 'isDarkMode'>;
-
 interface ContextInitialValuesType extends StateInitialValuesType {
   handleDarkMode: () => void;
   handleLoader: (loaderValues: LoaderValuesType) => void;
@@ -32,7 +31,7 @@ export const NavbarProvider = ({ children }: PropsWithChildren) => {
   const handleDarkMode = () =>
     setValues((prevState) => {
       const changedMode = !prevState.isDarkMode;
-      navBarService.persist(changedMode);
+      navbarService.persist(changedMode);
       return { ...prevState, isDarkMode: changedMode };
     });
 

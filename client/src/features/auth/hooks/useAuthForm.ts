@@ -8,12 +8,12 @@ import { INPUTS, RegisterInputsType } from '@/features/auth/types';
 import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
 import { NavbarContext } from '@/features/navbar/Navbar.context';
 
-type ActionType = `${ACTIONS}`;
+type ActionType = (typeof ACTIONS)[keyof typeof ACTIONS];
 
-enum ACTIONS {
-  REGISTER = 'register',
-  LOGIN = 'login',
-}
+const ACTIONS = {
+  REGISTER: 'register',
+  LOGIN: 'login',
+} as const;
 
 export const useAuthForm = (action: ActionType) => {
   const condition = action === ACTIONS.LOGIN ? true : false;

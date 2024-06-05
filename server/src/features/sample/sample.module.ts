@@ -10,7 +10,7 @@ import { SampleProcessor } from './queues';
 import { SampleController } from './sample.controller';
 import { Sample, SampleSchema } from './schemas';
 import { SampleQueueService, SampleService } from './services';
-import { SAMPLE_QUEUE } from './types';
+import { SAMPLE_QUEUE } from './utils';
 
 @Module({
   imports: [

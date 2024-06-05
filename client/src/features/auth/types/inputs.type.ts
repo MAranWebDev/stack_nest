@@ -1,13 +1,13 @@
-/* enums */
-export enum INPUTS {
-  NAME = 'name',
-  EMAIL = 'email',
-  PASSWORD = 'password',
-  CONFIRM_PASSWORD = 'confirm_password',
-}
+/* constants */
+export const INPUTS = {
+  NAME: 'name',
+  EMAIL: 'email',
+  PASSWORD: 'password',
+  CONFIRM_PASSWORD: 'confirm_password',
+} as const;
 
 /* types */
-export type InputsType = `${INPUTS}`;
+export type InputsType = (typeof INPUTS)[keyof typeof INPUTS];
 
 export interface LoginInputsType {
   [INPUTS.EMAIL]: string;
@@ -20,4 +20,5 @@ export interface RegisterInputsType extends LoginInputsType {
 }
 
 export interface LoginBodyType extends LoginInputsType {}
-export interface RegisterBodyType extends Omit<RegisterInputsType, INPUTS.CONFIRM_PASSWORD> {}
+export interface RegisterBodyType
+  extends Omit<RegisterInputsType, typeof INPUTS.CONFIRM_PASSWORD> {}
