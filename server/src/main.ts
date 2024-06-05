@@ -7,13 +7,17 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  /* envs only for this file */
   const configService = app.get(ConfigService);
+  const PORT = configService.get('SERVER_PORT') || 3000;
+
   const logger = new Logger('Main');
 
-  /* url */
+  /* api url */
   app.setGlobalPrefix('api/v1');
 
-  /* swagger */
+  /* swagger & swagger url */
   const config = new DocumentBuilder()
     .setTitle("Mario's API")
     .setDescription("Mario's API description")
@@ -29,8 +33,9 @@ async function bootstrap() {
   /* validations */
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
-  await app.listen(configService.get('SERVER_PORT'), () => {
-    logger.log(`Server running on port ${configService.get('SERVER_PORT')}`);
+  /* start server */
+  await app.listen(PORT, () => {
+    logger.log(`Server running on port ${PORT}`);
   });
 }
 bootstrap();

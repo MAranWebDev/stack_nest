@@ -12,6 +12,10 @@ import { AuthModule } from './features/auth/auth.module';
 import { SampleModule } from './features/sample/sample.module';
 import { UsersModule } from './features/users/users.module';
 
+const URLS = {
+  BULL_BOARD: '/queues', // ojo con esto
+} as const;
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [ENV] }),
@@ -21,7 +25,7 @@ import { UsersModule } from './features/users/users.module';
       }),
       inject: [ConfigService],
     }),
-    BullBoardModule.forRoot({ route: '/queues', adapter: ExpressAdapter }),
+    BullBoardModule.forRoot({ route: URLS.BULL_BOARD, adapter: ExpressAdapter }),
     MongooseModule.forRootAsync({
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get('DATABASE_URL'),
