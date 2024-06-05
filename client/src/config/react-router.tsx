@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { PrivateRoute } from '@/features/auth/components';
-import { ROLES } from '@/features/auth/types';
+import { ROLES } from '@/features/auth/utils';
 import { AdminPage } from '@/pages/Admin.page';
 import { ErrorPage } from '@/pages/Error.page';
 import { HomePage } from '@/pages/Home.page';

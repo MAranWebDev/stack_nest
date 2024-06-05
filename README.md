@@ -12,10 +12,9 @@
 
 - \*add redis credentials
 - \*fix bull-board url
-- \*protect nest routes with roles
-- \*implement husky
 - \*implement oauth google
+- implement husky
+- protect nest routes with roles
 - implement redirect in protected routes
-- in auth, simplify clean local storage with ObjectValues
 - fix register layout (title equivalent to login)
 - understand label in darkmode switch
