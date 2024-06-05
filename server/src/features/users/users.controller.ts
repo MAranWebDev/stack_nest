@@ -4,10 +4,10 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserRoleDto } from './dtos';
 import { UsersService } from './users.service';
 
-enum ROUTES {
-  USERS = 'users',
-  ROLES = 'roles',
-}
+const ROUTES = {
+  USERS: 'users',
+  ROLES: 'roles',
+} as const;
 
 @ApiTags(ROUTES.USERS)
 @ApiBearerAuth()

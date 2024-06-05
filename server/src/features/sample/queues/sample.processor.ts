@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
 
 import { SampleService } from '@/features/sample/services';
-import { SAMPLE_QUEUE } from '@/features/sample/types';
+import { SAMPLE_QUEUE } from '@/features/sample/utils';
 
 @Processor(SAMPLE_QUEUE.NAME)
 export class SampleProcessor {
