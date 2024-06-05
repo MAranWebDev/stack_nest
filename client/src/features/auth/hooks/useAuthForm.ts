@@ -14,9 +14,15 @@ import { NavbarContext } from '@/features/navbar/Navbar.context';
 
 type ActionType = (typeof ACTIONS)[keyof typeof ACTIONS];
 
-const ACTIONS = {
+export const ACTIONS = {
   LOGIN: 'login',
+  REGISTER: 'register',
 } as const;
+
+const loginValues = { [INPUTS.EMAIL]: '', [INPUTS.PASSWORD]: '' };
+const loginArray = [INPUTS.EMAIL, INPUTS.PASSWORD];
+const registerValues = { ...loginValues, [INPUTS.NAME]: '', [INPUTS.CONFIRM_PASSWORD]: '' };
+const registerArray = [...loginArray, INPUTS.NAME, INPUTS.CONFIRM_PASSWORD];
 
 export const useAuthForm = (action: ActionType) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
@@ -40,8 +46,6 @@ export const useAuthForm = (action: ActionType) => {
     },
   });
 
-  const loginValues = { [INPUTS.EMAIL]: '', [INPUTS.PASSWORD]: '' };
-  const registerValues = { ...loginValues, [INPUTS.NAME]: '', [INPUTS.CONFIRM_PASSWORD]: '' };
   const {
     register,
     handleSubmit,
@@ -52,12 +56,9 @@ export const useAuthForm = (action: ActionType) => {
     defaultValues: condition ? loginValues : registerValues,
   });
 
-  const formValidations = condition ? getLoginValidations() : getRegisterValidations({ getValues });
-
-  const loginArray = [INPUTS.EMAIL, INPUTS.PASSWORD];
-  const registerArray = [...loginArray, INPUTS.NAME, INPUTS.CONFIRM_PASSWORD];
   const watchedFields = watch(condition ? loginArray : registerArray);
   const isFormEmpty = Object.values(watchedFields).some((value) => value === '');
+  const formValidations = condition ? getLoginValidations() : getRegisterValidations({ getValues });
 
   const onSubmit: SubmitHandler<RegisterInputsType> = async (inputs) => mutate(inputs);
 

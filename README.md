@@ -13,8 +13,12 @@
 - \*add redis credentials
 - \*fix bull-board url
 - \*implement oauth google
+- \*fix volume docker
+- \*implement seeders
+- \*apply typeorm with migrations
+- \*make client, server, db be independent
 - implement husky
 - protect nest routes with roles
 - implement redirect in protected routes
-- fix register layout (title equivalent to login)
 - understand label in darkmode switch
+- understands withCredentials: true de axios

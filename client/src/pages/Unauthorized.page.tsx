@@ -12,6 +12,7 @@ const BASE_URL = window.location.origin;
 export const UnauthorizedPage = () => {
   const navigate = useNavigate();
   const currentLocation = useLocation();
+
   const fromPathname = currentLocation.state?.from?.pathname;
 
   return !fromPathname ? (

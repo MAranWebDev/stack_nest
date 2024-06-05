@@ -3,6 +3,7 @@ import { useContext } from 'react';
 
 import { NavbarContext } from '@/features/navbar/Navbar.context';
 
+// ojo con esto
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 export const DarkModeSwitch = () => {
