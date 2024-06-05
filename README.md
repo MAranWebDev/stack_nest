@@ -10,15 +10,12 @@
 
 ## To do
 
-- add redis credentials
-- fix bull-board url
-- replace enums with as const; type TEST = (typeof TEST)[keyof typeof TEST];
-- implement husky
+- \*add redis credentials
+- \*fix bull-board url
+- \*protect nest routes with roles
+- \*implement husky
+- \*implement oauth google
 - implement redirect in protected routes
 - in auth, simplify clean local storage with ObjectValues
-- change bar names
-- merge loading bar with navbar
-- protect nest routes with roles
-- implement oauth google
 - fix register layout (title equivalent to login)
 - understand label in darkmode switch

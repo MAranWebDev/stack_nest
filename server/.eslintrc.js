@@ -20,7 +20,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
 
     /* custom rules */
-    'no-restricted-imports': ['error', { patterns: ['src', '../**', 'features/*/*/*'] }],
+    'no-restricted-imports': ['error', { patterns: ['src', '../**', 'features/*/*'] }],
     'import/no-unresolved': ['error', { ignore: ['^@/'] }],
     'import/order': [
       'error',
