@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import { axiosApi } from '@/libs/axios';
 
-import { DecodedJwtType, LOCAL_STORAGE, LoginBodyType, RegisterBodyType } from './types';
+import { DecodedJwtType, LOCAL_STORAGE, LoginInputsType, RegisterBodyType } from './utils';
 
 const URLS = {
   REGISTER: '/auth/register',
@@ -40,7 +40,7 @@ export const authService = {
     }
   },
 
-  async login(loginBody: LoginBodyType) {
+  async login(loginBody: LoginInputsType) {
     try {
       const {
         data: { token },
@@ -53,7 +53,7 @@ export const authService = {
   },
 
   logout() {
-    const keysToRemove = [LOCAL_STORAGE.JWT, LOCAL_STORAGE.ROLE, LOCAL_STORAGE.USER];
-    keysToRemove.forEach((key) => localStorage.removeItem(key));
+    const localStorageKeysArray = Object.values(LOCAL_STORAGE);
+    localStorageKeysArray.forEach((key) => localStorage.removeItem(key));
   },
 };

@@ -1,6 +1,6 @@
 import { FieldValues, RegisterOptions, UseFormGetValues } from 'react-hook-form';
 
-import { INPUTS, InputsType, RegisterInputsType } from '@/features/auth/types';
+import { INPUTS, InputsType, RegisterInputsType } from '@/features/auth/utils';
 
 interface RegisterPropsType {
   getValues: UseFormGetValues<RegisterInputsType>;

@@ -4,14 +4,17 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AuthContext } from '@/features/auth/Auth.context';
 import { authService } from '@/features/auth/auth.service';
-import { INPUTS, RegisterInputsType } from '@/features/auth/types';
-import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
+import {
+  getLoginValidations,
+  getRegisterValidations,
+  INPUTS,
+  RegisterInputsType,
+} from '@/features/auth/utils';
 import { NavbarContext } from '@/features/navbar/Navbar.context';
 
 type ActionType = (typeof ACTIONS)[keyof typeof ACTIONS];
 
 const ACTIONS = {
-  REGISTER: 'register',
   LOGIN: 'login',
 } as const;
 

@@ -1,20 +1,15 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
-import { LOCAL_STORAGE } from './types';
+import { LOCAL_STORAGE } from './utils';
 
-interface StateInitialValuesType {
-  jwt: string | null;
-  user: string | null;
-  userRole: string | null;
-}
+type StateInitialValuesType = typeof stateInitialValues;
+type ValuesType = Partial<StateInitialValuesType>;
 
 interface ContextInitialValuesType extends StateInitialValuesType {
-  handleValues: (props: PropsType) => void;
+  handleValues: (values: ValuesType) => void;
 }
 
-type PropsType = Partial<StateInitialValuesType>;
-
-const stateInitialValues: StateInitialValuesType = {
+const stateInitialValues = {
   jwt: localStorage.getItem(LOCAL_STORAGE.JWT),
   user: localStorage.getItem(LOCAL_STORAGE.USER),
   userRole: localStorage.getItem(LOCAL_STORAGE.ROLE),
@@ -30,7 +25,8 @@ export const AuthContext = createContext(contextInitialValues);
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [values, setValues] = useState(stateInitialValues);
 
-  const handleValues = (props: PropsType) => setValues((prevState) => ({ ...prevState, ...props }));
+  const handleValues = (values: ValuesType) =>
+    setValues((prevState) => ({ ...prevState, ...values }));
 
   const providerValues = { ...values, handleValues };
 

@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 import { useAuthForm } from '@/features/auth/hooks';
-import { INPUTS } from '@/features/auth/types';
+import { INPUTS } from '@/features/auth/utils';
 
 import { FormLayout } from './FormLayout';
 
