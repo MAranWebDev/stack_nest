@@ -7,16 +7,21 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import { MainLayout } from '@/components/layouts';
 
-const BASE_URL = window.location.origin;
+const ROUTES = {
+  BASE: window.location.origin,
+  BACK: -1,
+  LOGIN: '/login',
+} as const;
 
 export const UnauthorizedPage = () => {
   const navigate = useNavigate();
   const currentLocation = useLocation();
 
   const fromPathname = currentLocation.state?.from?.pathname;
+  const previousUrl = ROUTES.BASE + fromPathname;
 
   return !fromPathname ? (
-    <Navigate to="/login" state={{ from: currentLocation }} replace />
+    <Navigate to={ROUTES.LOGIN} state={{ from: currentLocation }} replace />
   ) : (
     <MainLayout>
       <Stack
@@ -31,10 +36,14 @@ export const UnauthorizedPage = () => {
         <p>
           <span>You do not have access to: </span>
           <Typography sx={{ color: 'text.secondary' }} component="span" variant="subtitle2">
-            {BASE_URL + fromPathname}
+            {previousUrl}
           </Typography>
         </p>
-        <Button variant="contained" endIcon={<ExitToAppIcon />} onClick={() => navigate(-1)}>
+        <Button
+          variant="contained"
+          endIcon={<ExitToAppIcon />}
+          onClick={() => navigate(ROUTES.BACK)}
+        >
           Go Back
         </Button>
       </Stack>

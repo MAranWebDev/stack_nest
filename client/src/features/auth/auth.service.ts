@@ -6,7 +6,7 @@ import { axiosApi } from '@/libs/axios';
 import { LOCAL_STORAGE } from './constants';
 import { DecodedJwtType, LoginInputsType, RegisterBodyType } from './types';
 
-const URLS = {
+const ENDPOINTS = {
   REGISTER: '/auth/register',
   LOGIN: '/auth/login',
 } as const;
@@ -33,7 +33,7 @@ export const authService = {
     try {
       const {
         data: { token },
-      } = await axiosApi.post(URLS.REGISTER, registerBody);
+      } = await axiosApi.post(ENDPOINTS.REGISTER, registerBody);
       if (token) return helpers._handleJwt(token);
       throw Error();
     } catch (error) {
@@ -45,7 +45,7 @@ export const authService = {
     try {
       const {
         data: { token },
-      } = await axiosApi.post(URLS.LOGIN, loginBody);
+      } = await axiosApi.post(ENDPOINTS.LOGIN, loginBody);
       if (token) return helpers._handleJwt(token);
       throw Error();
     } catch (error) {

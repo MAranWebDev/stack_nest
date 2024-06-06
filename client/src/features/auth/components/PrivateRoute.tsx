@@ -2,18 +2,21 @@ import { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { AuthContext } from '@/features/auth/Auth.context';
-import { ROLES } from '@/features/auth/constants';
+
+const ROUTES = {
+  UNAUTHORIZED: '/unauthorized',
+} as const;
 
 interface PropsType {
-  role: ROLES;
+  roles: (string | null)[];
 }
 
-export const PrivateRoute = ({ role }: PropsType) => {
+export const PrivateRoute = ({ roles }: PropsType) => {
   const { userRole } = useContext(AuthContext);
   const currentLocation = useLocation();
 
-  return userRole !== role ? (
-    <Navigate to="/unauthorized" state={{ from: currentLocation }} replace />
+  return !roles.includes(userRole) ? (
+    <Navigate to={ROUTES.UNAUTHORIZED} state={{ from: currentLocation }} replace />
   ) : (
     <Outlet />
   );

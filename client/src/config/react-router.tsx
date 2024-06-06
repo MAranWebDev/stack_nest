@@ -15,15 +15,15 @@ export const reactRouter = createBrowserRouter([
   { path: 'login', element: <LoginPage /> },
   { path: 'unauthorized', element: <UnauthorizedPage /> },
   {
-    element: <PrivateRoute role={ROLES.ADMIN} />,
+    element: <PrivateRoute roles={['hola']} />,
     children: [{ path: 'admin', element: <AdminPage /> }],
   },
   {
-    element: <PrivateRoute role={ROLES.EDITOR} />,
+    element: <PrivateRoute roles={[ROLES.EDITOR]} />,
     children: [],
   },
   {
-    element: <PrivateRoute role={ROLES.USER} />,
+    element: <PrivateRoute roles={[ROLES.USER]} />,
     children: [],
   },
 ]);

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '@/features/auth/Auth.context';
 import { authService } from '@/features/auth/auth.service';
@@ -8,6 +9,10 @@ import { ACTIONS, INPUTS } from '@/features/auth/constants';
 import { RegisterInputsType } from '@/features/auth/types';
 import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
 import { NavbarContext } from '@/features/navbar/Navbar.context';
+
+const ROUTES = {
+  PROFILE: '/profile',
+} as const;
 
 const loginValues = { [INPUTS.EMAIL]: '', [INPUTS.PASSWORD]: '' };
 const loginArray = [INPUTS.EMAIL, INPUTS.PASSWORD];
@@ -19,6 +24,7 @@ export const useAuthForm = (action: ACTIONS) => {
 
   const { handleLoader: handleLoadingState, isError, isPending } = useContext(NavbarContext);
   const { handleValues: handleAuthState } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const { mutate } = useMutation({
     mutationFn: condition ? authService.login : authService.register,
@@ -30,6 +36,7 @@ export const useAuthForm = (action: ACTIONS) => {
     },
     onSuccess: ({ token, name, role }) => {
       handleAuthState({ jwt: token, user: name, userRole: role });
+      navigate(ROUTES.PROFILE);
     },
     onError: ({ message }) => {
       handleLoadingState({ isError: true, errorMessage: message });
