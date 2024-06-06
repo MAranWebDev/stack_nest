@@ -10,9 +10,9 @@ interface ContextInitialValuesType extends StateInitialValuesType {
 }
 
 const stateInitialValues = {
-  jwt: localStorage.getItem(LOCAL_STORAGE.JWT),
-  user: localStorage.getItem(LOCAL_STORAGE.USER),
-  userRole: localStorage.getItem(LOCAL_STORAGE.ROLE),
+  jwt: localStorage.getItem(LOCAL_STORAGE.JWT) || '',
+  user: localStorage.getItem(LOCAL_STORAGE.USER) || '',
+  userRole: localStorage.getItem(LOCAL_STORAGE.ROLE) || '',
 };
 
 const contextInitialValues: ContextInitialValuesType = {

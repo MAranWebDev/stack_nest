@@ -9,21 +9,25 @@ import { LoginPage } from '@/pages/Login.page';
 import { RegisterPage } from '@/pages/Register.page';
 import { UnauthorizedPage } from '@/pages/Unauthorized.page';
 
+const fullAuth = [ROLES.ADMIN];
+const writeAuth = [...fullAuth, ROLES.EDITOR];
+const readAuth = [...fullAuth, ...writeAuth, ROLES.USER];
+
 export const reactRouter = createBrowserRouter([
   { path: '/', element: <HomePage />, errorElement: <ErrorPage /> },
   { path: 'register', element: <RegisterPage /> },
   { path: 'login', element: <LoginPage /> },
   { path: 'unauthorized', element: <UnauthorizedPage /> },
   {
-    element: <PrivateRoute roles={['hola']} />,
+    element: <PrivateRoute roles={fullAuth} />,
     children: [{ path: 'admin', element: <AdminPage /> }],
   },
   {
-    element: <PrivateRoute roles={[ROLES.EDITOR]} />,
+    element: <PrivateRoute roles={writeAuth} />,
     children: [],
   },
   {
-    element: <PrivateRoute roles={[ROLES.USER]} />,
+    element: <PrivateRoute roles={readAuth} />,
     children: [],
   },
 ]);
