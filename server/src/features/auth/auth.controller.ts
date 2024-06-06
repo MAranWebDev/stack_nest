@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, LogUserDto } from '@/features/users/dtos';
 
 import { AuthService } from './auth.service';
-import { Public } from './utils/decorators';
+import { Public } from './decorators';
 
 const ROUTES = {
   AUTH: 'auth',

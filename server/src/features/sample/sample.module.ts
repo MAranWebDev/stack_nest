@@ -6,11 +6,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { UsersModule } from '@/features/users/users.module';
 
+import { SAMPLE_QUEUE } from './constants';
 import { SampleProcessor } from './queues';
 import { SampleController } from './sample.controller';
 import { Sample, SampleSchema } from './schemas';
 import { SampleQueueService, SampleService } from './services';
-import { SAMPLE_QUEUE } from './utils';
 
 @Module({
   imports: [

@@ -2,8 +2,8 @@ import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
 
+import { SAMPLE_QUEUE } from '@/features/sample/constants';
 import { CreateSampleDto, UpdateSampleDto } from '@/features/sample/dtos';
-import { SAMPLE_QUEUE } from '@/features/sample/utils';
 
 @Injectable()
 export class SampleQueueService {

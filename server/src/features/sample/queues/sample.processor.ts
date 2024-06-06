@@ -2,8 +2,8 @@ import { OnQueueActive, OnQueueCompleted, OnQueueFailed, Process, Processor } fr
 import { Logger } from '@nestjs/common';
 import { Job } from 'bull';
 
+import { SAMPLE_QUEUE } from '@/features/sample/constants';
 import { SampleService } from '@/features/sample/services';
-import { SAMPLE_QUEUE } from '@/features/sample/utils';
 
 @Processor(SAMPLE_QUEUE.NAME)
 export class SampleProcessor {
