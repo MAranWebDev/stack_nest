@@ -1,4 +1,4 @@
-export type InputsType = (typeof INPUTS)[keyof typeof INPUTS];
+export type INPUTS = (typeof INPUTS)[keyof typeof INPUTS];
 
 export const INPUTS = {
   NAME: 'name',
