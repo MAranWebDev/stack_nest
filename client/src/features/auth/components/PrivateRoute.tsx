@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { AuthContext } from '@/features/auth/Auth.context';
-import { RolesType } from '@/features/auth/constants';
+import { ROLES } from '@/features/auth/constants';
 
 interface PropsType {
-  role: RolesType;
+  role: ROLES;
 }
 
 export const PrivateRoute = ({ role }: PropsType) => {
