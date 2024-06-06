@@ -7,8 +7,8 @@ import { UsersModule } from '@/features/users/users.module';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { JwtStrategy } from './utils/jwt.strategy';
+import { JwtAuthGuard } from './utils/guards/jwt-auth.guard';
+import { JwtStrategy } from './utils/strategies/jwt.strategy';
 
 @Module({
   imports: [
