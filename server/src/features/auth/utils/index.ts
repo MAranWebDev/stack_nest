@@ -1,1 +1,3 @@
-export * from './jwt.strategy';
+export * from './decorators';
+export * from './guards';
+export * from './strategies';
