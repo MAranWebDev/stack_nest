@@ -4,24 +4,17 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AuthContext } from '@/features/auth/Auth.context';
 import { authService } from '@/features/auth/auth.service';
-import { INPUTS } from '@/features/auth/constants';
+import { ACTIONS, INPUTS } from '@/features/auth/constants';
 import { RegisterInputsType } from '@/features/auth/types';
 import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
 import { NavbarContext } from '@/features/navbar/Navbar.context';
-
-type ActionType = (typeof ACTIONS)[keyof typeof ACTIONS];
-
-export const ACTIONS = {
-  LOGIN: 'login',
-  REGISTER: 'register',
-} as const;
 
 const loginValues = { [INPUTS.EMAIL]: '', [INPUTS.PASSWORD]: '' };
 const loginArray = [INPUTS.EMAIL, INPUTS.PASSWORD];
 const registerValues = { ...loginValues, [INPUTS.NAME]: '', [INPUTS.CONFIRM_PASSWORD]: '' };
 const registerArray = [...loginArray, INPUTS.NAME, INPUTS.CONFIRM_PASSWORD];
 
-export const useAuthForm = (action: ActionType) => {
+export const useAuthForm = (action: ACTIONS) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
 
   const { handleLoader: handleLoadingState, isError, isPending } = useContext(NavbarContext);

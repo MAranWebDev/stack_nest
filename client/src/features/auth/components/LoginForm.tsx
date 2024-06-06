@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-import { INPUTS } from '@/features/auth/constants';
-import { ACTIONS, useAuthForm } from '@/features/auth/hooks';
+import { ACTIONS, INPUTS } from '@/features/auth/constants';
+import { useAuthForm } from '@/features/auth/hooks';
 
 import { FormLayout } from './FormLayout';
 
