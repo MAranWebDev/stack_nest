@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { AuthContext } from '@/features/auth/Auth.context';
-import { RolesType } from '@/features/auth/utils';
+import { RolesType } from '@/features/auth/constants';
 
 interface PropsType {
   role: RolesType;

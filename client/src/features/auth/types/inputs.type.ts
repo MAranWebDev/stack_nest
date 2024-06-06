@@ -1,4 +1,4 @@
-import { INPUTS } from '@/features/auth/utils';
+import { INPUTS } from '@/features/auth/constants';
 
 export interface LoginInputsType {
   [INPUTS.EMAIL]: string;

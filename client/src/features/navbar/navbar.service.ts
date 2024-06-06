@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE } from './utils';
+import { LOCAL_STORAGE } from './constants';
 
 export const navbarService = {
   persist(isDarkMode: boolean) {

@@ -1,7 +1,7 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
+import { LOCAL_STORAGE } from './constants';
 import { navbarService } from './navbar.service';
-import { LOCAL_STORAGE } from './utils';
 
 type StateInitialValuesType = typeof stateInitialValues;
 type LoaderValuesType = Omit<Partial<StateInitialValuesType>, 'isDarkMode'>;

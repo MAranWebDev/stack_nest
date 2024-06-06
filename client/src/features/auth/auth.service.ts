@@ -3,7 +3,8 @@ import { jwtDecode } from 'jwt-decode';
 
 import { axiosApi } from '@/libs/axios';
 
-import { DecodedJwtType, LOCAL_STORAGE, LoginInputsType, RegisterBodyType } from './utils';
+import { LOCAL_STORAGE } from './constants';
+import { DecodedJwtType, LoginInputsType, RegisterBodyType } from './types';
 
 const URLS = {
   REGISTER: '/auth/register',

@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useState } from 'react';
 
-import { LOCAL_STORAGE } from './utils';
+import { LOCAL_STORAGE } from './constants';
 
 type StateInitialValuesType = typeof stateInitialValues;
 type ValuesType = Partial<StateInitialValuesType>;
