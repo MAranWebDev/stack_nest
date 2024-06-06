@@ -5,6 +5,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
+      - mongoconfig:/data/configdb
       - mongodata:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
@@ -28,5 +29,6 @@ services:
       - ME_CONFIG_BASICAUTH=false
 
 volumes:
+  mongoconfig: {}
   mongodata: {}
   redisdata: {}
