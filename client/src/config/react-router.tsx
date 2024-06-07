@@ -15,12 +15,13 @@ const adminAuth = [ROLES.ADMIN];
 const defaultAuth = [...adminAuth, ROLES.DEFAULT];
 
 export const reactRouter = createBrowserRouter([
-  { path: ROUTES.HOME, element: <HomePage />, errorElement: <ErrorPage /> },
-
   { path: ROUTES.UNAUTHORIZED, element: <UnauthorizedPage /> },
   {
+    path: ROUTES.HOME,
+    errorElement: <ErrorPage />,
     element: <PublicRoute />,
     children: [
+      { path: ROUTES.HOME, element: <HomePage /> },
       { path: ROUTES.REGISTER, element: <RegisterPage /> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
     ],

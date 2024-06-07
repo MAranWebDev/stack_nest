@@ -4,16 +4,18 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { AuthContext } from '@/features/auth/Auth.context';
 import { ROLES } from '@/features/auth/constants';
+import { useCheckState } from '@/features/auth/hooks';
 
 interface PropsType {
   roles: ROLES[];
 }
 
 export const PrivateRoute = ({ roles }: PropsType) => {
-  const { userRole } = useContext(AuthContext);
+  useCheckState();
+  const { jwt, userRole } = useContext(AuthContext);
   const currentLocation = useLocation();
 
-  if (!userRole) return <Navigate to={ROUTES.LOGIN} state={{ from: currentLocation }} replace />;
+  if (!jwt) return <Navigate to={ROUTES.LOGIN} state={{ from: currentLocation }} replace />;
 
   if (!roles.includes(userRole as ROLES))
     return <Navigate to={ROUTES.UNAUTHORIZED} state={{ from: currentLocation }} replace />;
