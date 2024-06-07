@@ -24,6 +24,6 @@
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["./src"] /* fix tsconfig error*/,
+  "include": ["./src"] /* fix tsconfig error */,
   "references": [{ "path": "./tsconfig.node.json" }]
 }
