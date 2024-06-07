@@ -1,15 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
-import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
-import { ROUTES } from '@/constants/routes';
-import { AuthContext } from '@/features/auth/Auth.context';
-import { authService } from '@/features/auth/auth.service';
 import { ACTIONS, INPUTS } from '@/features/auth/constants';
 import { RegisterInputsType } from '@/features/auth/types';
 import { getLoginValidations, getRegisterValidations } from '@/features/auth/utils';
-import { NavbarContext } from '@/features/navbar/Navbar.context';
+
+import { useAuthMutate } from './useAuthMutate';
 
 const loginValues = { [INPUTS.EMAIL]: '', [INPUTS.PASSWORD]: '' };
 const loginArray = [INPUTS.EMAIL, INPUTS.PASSWORD];
@@ -19,27 +14,7 @@ const registerArray = [...loginArray, INPUTS.NAME, INPUTS.CONFIRM_PASSWORD];
 export const useAuthForm = (action: ACTIONS) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
 
-  const { handleLoader: handleLoadingState, isError, isPending } = useContext(NavbarContext);
-  const { handleValues: handleAuthState } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const { mutate } = useMutation({
-    mutationFn: condition ? authService.login : authService.register,
-    onMutate: () => {
-      handleLoadingState({ isPending: true });
-    },
-    onSettled: () => {
-      handleLoadingState({ isPending: false });
-    },
-    onSuccess: ({ token, name, role }) => {
-      handleAuthState({ jwt: token, user: name, userRole: role });
-      navigate(ROUTES.DASHBOARD);
-    },
-    onError: ({ message }) => {
-      handleLoadingState({ isError: true, errorMessage: message });
-    },
-  });
-
+  const { mutate, isError, isPending } = useAuthMutate(action);
   const {
     register,
     handleSubmit,
