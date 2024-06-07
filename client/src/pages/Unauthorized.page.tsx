@@ -6,19 +6,16 @@ import Typography from '@mui/material/Typography';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import { MainLayout } from '@/components/layouts';
+import { ROUTES } from '@/constants/routes';
 
-const ROUTES = {
-  BASE: window.location.origin,
-  BACK: -1,
-  LOGIN: '/login',
-} as const;
+const baseUrl = window.location.origin;
 
 export const UnauthorizedPage = () => {
   const navigate = useNavigate();
   const currentLocation = useLocation();
 
   const fromPathname = currentLocation.state?.from?.pathname;
-  const previousUrl = ROUTES.BASE + fromPathname;
+  const previousUrl = baseUrl + fromPathname;
 
   return !fromPathname ? (
     <Navigate to={ROUTES.LOGIN} state={{ from: currentLocation }} replace />
@@ -39,11 +36,7 @@ export const UnauthorizedPage = () => {
             {previousUrl}
           </Typography>
         </p>
-        <Button
-          variant="contained"
-          endIcon={<ExitToAppIcon />}
-          onClick={() => navigate(ROUTES.BACK)}
-        >
+        <Button variant="contained" endIcon={<ExitToAppIcon />} onClick={() => navigate(-1)}>
           Go Back
         </Button>
       </Stack>
