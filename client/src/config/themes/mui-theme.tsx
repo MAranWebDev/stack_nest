@@ -7,10 +7,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PropsWithChildren, useContext } from 'react';
 
-import { NavbarContext } from '@/features/navbar/Navbar.context';
+import { DarkModeContext } from '@/features/dark-mode/DarkMode.context';
 
 export const MuiThemeProvider = ({ children }: PropsWithChildren) => {
-  const { isDarkMode } = useContext(NavbarContext);
+  const { isDarkMode } = useContext(DarkModeContext);
 
   const theme = createTheme({
     palette: {
