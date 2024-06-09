@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react';
 
 import { AuthProvider } from '@/features/auth/Auth.context';
-import { NavbarProvider } from '@/features/navbar/Navbar.context';
+import { DarkModeProvider } from '@/features/dark-mode/DarkMode.context';
+import { LoadingProvider } from '@/features/loading/Loading.context';
 
 export const ReactContextProvider = ({ children }: PropsWithChildren) => {
-  const providers = [NavbarProvider, AuthProvider];
+  const providers = [DarkModeProvider, LoadingProvider, AuthProvider];
 
   return providers.reduce(
     (accumulator, CurrentProvider) => <CurrentProvider>{accumulator}</CurrentProvider>,
