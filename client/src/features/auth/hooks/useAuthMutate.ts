@@ -6,12 +6,12 @@ import { ROUTES } from '@/constants/routes';
 import { AuthContext } from '@/features/auth/Auth.context';
 import { authService } from '@/features/auth/auth.service';
 import { ACTIONS } from '@/features/auth/constants';
-import { NavbarContext } from '@/features/navbar/Navbar.context';
+import { LoadingContext } from '@/features/loading/Loading.context';
 
 export const useAuthMutate = (action: ACTIONS) => {
   const condition = action === ACTIONS.LOGIN ? true : false;
 
-  const { handleLoader: handleLoadingState, isError, isPending } = useContext(NavbarContext);
+  const { handleValues: handleLoadingState, isError, isPending } = useContext(LoadingContext);
   const { handleValues: handleAuthState } = useContext(AuthContext);
   const navigate = useNavigate();
 
