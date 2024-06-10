@@ -1,12 +1,5 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { OmitType } from '@nestjs/swagger';
 
-export class LogUserDto {
-  @IsEmail()
-  @MaxLength(50)
-  email: string;
+import { CreateUserDto } from './create-user.dto';
 
-  @IsString()
-  @MinLength(4)
-  @MaxLength(10)
-  password: string;
-}
+export class LogUserDto extends OmitType(CreateUserDto, ['name'] as const) {}
