@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUppercase, MaxLength, MinLength } from 'class-validator';
+import { IsString, IsUppercase, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserRoleDto {
   @IsUppercase()
@@ -7,7 +7,8 @@ export class CreateUserRoleDto {
   @MaxLength(10)
   _id: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsUppercase()
+  @MinLength(4)
+  @MaxLength(20)
   name: string;
 }
