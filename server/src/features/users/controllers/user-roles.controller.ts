@@ -5,7 +5,7 @@ import { ROUTES } from '@/features/users/constants';
 import { CreateUserRoleDto, UpdateUserRoleDto } from '@/features/users/dtos';
 import { UserRolesService } from '@/features/users/services';
 
-@ApiTags(ROUTES.USERS_ROLES)
+@ApiTags(ROUTES.USERS)
 @ApiBearerAuth()
 @Controller(ROUTES.USERS_ROLES)
 export class UserRolesController {
