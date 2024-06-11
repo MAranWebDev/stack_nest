@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { CreateUserDto } from '@/features/users/dtos';
+import { CreateUserDto, UpdateUserDto } from '@/features/users/dtos';
 import { Users } from '@/features/users/schemas';
 
 @Injectable()
@@ -19,5 +19,9 @@ export class UsersService {
 
   async findOneByEmail(email: string) {
     return this.usersModel.findOne({ email }).exec();
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return this.usersModel.findByIdAndUpdate(id, updateUserDto);
   }
 }
