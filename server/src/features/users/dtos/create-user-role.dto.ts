@@ -7,7 +7,6 @@ export class CreateUserRoleDto {
   @MaxLength(10)
   _id: string;
 
-  @IsUppercase()
   @MinLength(4)
   @MaxLength(20)
   name: string;
