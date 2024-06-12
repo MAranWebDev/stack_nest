@@ -1,10 +1,9 @@
-export interface DecodedJwtType {
+export interface JwtType {
+  token: string;
   id: string;
   name: string;
   email: string;
   role: string;
 }
 
-export interface JwtType extends DecodedJwtType {
-  token: string;
-}
+export interface DecodedJwtType extends Omit<JwtType, 'token'> {}
