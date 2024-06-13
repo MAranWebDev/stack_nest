@@ -1,10 +1,9 @@
-import { IsString, IsUppercase, MaxLength, MinLength } from 'class-validator';
+import { MaxLength, MinLength } from 'class-validator';
+
+import { IsCustomId } from '@/features/users/decorators';
 
 export class CreateUserRoleDto {
-  @IsUppercase()
-  @IsString()
-  @MinLength(4)
-  @MaxLength(10)
+  @IsCustomId()
   _id: string;
 
   @MinLength(4)

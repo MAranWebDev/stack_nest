@@ -1,9 +1,14 @@
-import { IntersectionType, OmitType, PartialType, PickType } from '@nestjs/swagger';
+import { IntersectionType, OmitType, PartialType } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
-import { CreateUserRoleDto } from './create-user-role.dto';
+import { IsCustomId } from '@/features/users/decorators';
+
 import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends IntersectionType(
-  OmitType(PartialType(CreateUserDto), ['email', 'password'] as const),
-  PickType(PartialType(CreateUserRoleDto), ['_id'] as const),
-) {}
+  PartialType(OmitType(CreateUserDto, ['email', 'password'] as const)),
+) {
+  @IsCustomId()
+  @IsOptional()
+  role?: string;
+}
