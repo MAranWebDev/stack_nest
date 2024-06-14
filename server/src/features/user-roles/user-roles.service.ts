@@ -13,7 +13,7 @@ export class UserRolesService {
 
   async create(createUserRoleDto: CreateUserRoleDto) {
     const userRole = await this.userRolesModel.findById(createUserRoleDto._id).exec();
-    if (userRole) throw new BadRequestException('User role already exists');
+    if (userRole) throw new BadRequestException('Role already exists');
 
     return this.userRolesModel.create(createUserRoleDto);
   }
@@ -24,7 +24,7 @@ export class UserRolesService {
 
   async findOne(id: string) {
     const userRole = await this.userRolesModel.findById(id).exec();
-    if (!userRole) throw new NotFoundException('User role not found');
+    if (!userRole) throw new NotFoundException('Role not found');
     return userRole;
   }
 
@@ -34,19 +34,20 @@ export class UserRolesService {
     await this.findOne(id);
 
     await this.userRolesModel.updateOne({ _id: id }, updateUserRoleDto);
-    return { message: 'User role updated' };
+    return { message: 'Role updated' };
   }
 
   async updateStatus(id: string) {
     const { isActive } = await this.findOne(id);
+    const newStatus = isActive ? 'disabled' : 'enabled';
     await this.userRolesModel.updateOne({ _id: id }, { isActive: !isActive });
-    return { message: 'User role status updated' };
+    return { message: `Role ${newStatus}` };
   }
 
   async remove(id: string) {
     await this.findOne(id);
 
     await this.userRolesModel.deleteOne({ _id: id });
-    return { message: 'User role deleted' };
+    return { message: 'Role deleted' };
   }
 }

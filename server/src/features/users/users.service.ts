@@ -64,7 +64,8 @@ export class UsersService {
 
   async updateStatus(id: string) {
     const { isActive } = await this.findOne(id);
+    const newStatus = isActive ? 'disabled' : 'enabled';
     await this.usersModel.updateOne({ _id: id }, { isActive: !isActive });
-    return { message: 'User status updated' };
+    return { message: `User ${newStatus}` };
   }
 }
