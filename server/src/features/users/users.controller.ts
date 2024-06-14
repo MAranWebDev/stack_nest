@@ -9,14 +9,15 @@ import {
 } from '@/features/users/dtos';
 import { UserRolesService, UsersService } from '@/features/users/services';
 
-const ROUTES = {
-  USERS: 'users',
-  USERS_ROLES: 'users/roles',
-} as const;
+const ROUTE_USERS = 'users';
+const ROUTE_PASSWORD = 'password';
+const ROUTE_STATUS = 'status';
+const ROUTE_ROLES = 'roles';
+const ROUTE_ROLE_STATUS = `${ROUTE_ROLES}/status`;
 
-@ApiTags(ROUTES.USERS)
+@ApiTags(ROUTE_USERS)
 @ApiBearerAuth()
-@Controller(ROUTES.USERS)
+@Controller(ROUTE_USERS)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
@@ -39,43 +40,43 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Patch(':id')
+  @Patch(`${ROUTE_PASSWORD}/:id`)
   updatePassword(@Param('id') id: string, @Body() updateUserPasswordDto: UpdateUserPasswordDto) {
     return this.usersService.updatePassword(id, updateUserPasswordDto);
   }
 
-  @Patch(':id')
+  @Patch(`${ROUTE_STATUS}/:id`)
   updateStatus(@Param('id') id: string) {
     return this.usersService.updateStatus(id);
   }
 
   // user roles
-  @Post(ROUTES.USERS_ROLES)
+  @Post(ROUTE_ROLES)
   createUserRole(@Body() createUserRoleDto: CreateUserRoleDto) {
     return this.userRolesService.create(createUserRoleDto);
   }
 
-  @Get(ROUTES.USERS_ROLES)
+  @Get(ROUTE_ROLES)
   findAllUserRoles() {
     return this.userRolesService.findAll();
   }
 
-  @Get(`${ROUTES.USERS_ROLES}/:id`)
+  @Get(`${ROUTE_ROLES}/:id`)
   findOneUserRole(@Param('id') id: string) {
     return this.userRolesService.findOne(id);
   }
 
-  @Patch(`${ROUTES.USERS_ROLES}/:id`)
+  @Patch(`${ROUTE_ROLES}/:id`)
   updateUserRole(@Param('id') id: string, @Body() updateUserRoleDto: UpdateUserRoleDto) {
     return this.userRolesService.update(id, updateUserRoleDto);
   }
 
-  @Patch(`${ROUTES.USERS_ROLES}/:id`)
+  @Patch(`${ROUTE_ROLE_STATUS}/:id`)
   updateUserRoleStatus(@Param('id') id: string) {
     return this.userRolesService.updateStatus(id);
   }
 
-  @Delete(`${ROUTES.USERS_ROLES}/:id`)
+  @Delete(`${ROUTE_ROLES}/:id`)
   removeUserRole(@Param('id') id: string) {
     return this.userRolesService.remove(id);
   }
