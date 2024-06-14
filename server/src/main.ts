@@ -28,7 +28,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   /* cors */
-  app.enableCors({ origin: configService.get('CLIENT_URL') });
+  app.enableCors({ origin: configService.get('CLIENT_ORIGIN') });
 
   /* validations */
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));

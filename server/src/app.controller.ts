@@ -4,11 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { Public } from './features/auth/decorators';
 
-const ROUTES = {
-  ROOT: 'root',
-} as const;
-
-@ApiTags(ROUTES.ROOT)
+@ApiTags('root')
 @Public()
 @Controller()
 export class AppController {
