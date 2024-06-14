@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 
-import { UsersRolesService } from '@/features/user-roles/users-roles.service';
+import { UserRolesService } from '@/features/user-roles/user-roles.service';
 import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from '@/features/users/dtos';
 import { Users } from '@/features/users/schemas';
 import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
@@ -12,7 +12,7 @@ import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validat
 export class UsersService {
   constructor(
     @InjectModel(Users.name) private readonly usersModel: Model<Users>,
-    private readonly usersRolesService: UsersRolesService,
+    private readonly userRolesService: UserRolesService,
   ) {}
 
   private async _hashPassword(password: string) {
@@ -45,7 +45,7 @@ export class UsersService {
 
     await this.findOne(id);
 
-    if (updateUserDto.role) await this.usersRolesService.findOne(updateUserDto.role);
+    if (updateUserDto.role) await this.userRolesService.findOne(updateUserDto.role);
 
     await this.usersModel.updateOne({ _id: id }, updateUserDto);
     return { message: 'User updated' };
