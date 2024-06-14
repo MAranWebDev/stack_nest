@@ -16,7 +16,7 @@ const ROUTES = {
 @Public()
 @Controller(ROUTES.AUTH)
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post(ROUTES.REGISTER)
   register(@Body() createUserDto: CreateUserDto) {
