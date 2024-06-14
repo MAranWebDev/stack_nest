@@ -8,7 +8,7 @@ import { validateNoEmptyObject } from '@/utils/validators';
 
 @Injectable()
 export class UserRolesService {
-  constructor(@InjectModel(UserRoles.name) private userRolesModel: Model<UserRoles>) {}
+  constructor(@InjectModel(UserRoles.name) private readonly userRolesModel: Model<UserRoles>) {}
 
   async create(createUserRoleDto: CreateUserRoleDto) {
     return this.userRolesModel.create(createUserRoleDto);
@@ -26,7 +26,9 @@ export class UserRolesService {
 
   async update(id: string, updateUserRoleDto: UpdateUserRoleDto) {
     validateNoEmptyObject(updateUserRoleDto);
+
     await this.findOne(id);
+
     await this.userRolesModel.updateOne({ _id: id }, updateUserRoleDto);
     return { message: 'User role updated' };
   }
@@ -39,6 +41,7 @@ export class UserRolesService {
 
   async remove(id: string) {
     await this.findOne(id);
+
     await this.userRolesModel.deleteOne({ _id: id });
     return { message: 'User role deleted' };
   }

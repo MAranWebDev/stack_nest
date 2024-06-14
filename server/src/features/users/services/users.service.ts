@@ -12,8 +12,8 @@ import { UserRolesService } from './user-roles.service';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(Users.name) private usersModel: Model<Users>,
-    private userRolesService: UserRolesService,
+    @InjectModel(Users.name) private readonly usersModel: Model<Users>,
+    private readonly userRolesService: UserRolesService,
   ) {}
 
   private async _hashPassword(password: string) {
@@ -31,6 +31,7 @@ export class UsersService {
 
   async findOne(id: string) {
     validateMongooseObjectId(id);
+
     const user = await this.usersModel.findById(id).select('-password').exec();
     if (!user) throw new NotFoundException('User not found');
     return user;
@@ -42,14 +43,18 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     validateNoEmptyObject(updateUserDto);
+
     await this.findOne(id);
+
     if (updateUserDto.role) await this.userRolesService.findOne(updateUserDto.role);
+
     await this.usersModel.updateOne({ _id: id }, updateUserDto);
     return { message: 'User updated' };
   }
 
   async updatePassword(id: string, updateUserPasswordDto: UpdateUserPasswordDto) {
     await this.findOne(id);
+
     const hashedPassword = await this._hashPassword(updateUserPasswordDto.password);
     await this.usersModel.updateOne(
       { _id: id },

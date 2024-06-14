@@ -19,8 +19,8 @@ const ROUTES = {
 @Controller(ROUTES.USERS)
 export class UsersController {
   constructor(
-    private usersService: UsersService,
-    private userRolesService: UserRolesService,
+    private readonly usersService: UsersService,
+    private readonly userRolesService: UserRolesService,
   ) {}
 
   // users
