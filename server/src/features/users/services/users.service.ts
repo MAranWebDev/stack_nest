@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 
 import { CreateUserDto, UpdateUserDto, UpdateUserPasswordDto } from '@/features/users/dtos';
 import { Users } from '@/features/users/schemas';
-import { validateMongooseObjectId, validateNoEmptyObject } from '@/shared/validators';
+import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
 
 import { UserRolesService } from './user-roles.service';
 

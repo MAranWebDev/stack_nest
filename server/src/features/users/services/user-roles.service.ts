@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { CreateUserRoleDto, UpdateUserRoleDto } from '@/features/users/dtos';
 import { UserRoles } from '@/features/users/schemas';
-import { validateNoEmptyObject } from '@/shared/validators';
+import { validateNoEmptyObject } from '@/utils/validators';
 
 @Injectable()
 export class UserRolesService {
