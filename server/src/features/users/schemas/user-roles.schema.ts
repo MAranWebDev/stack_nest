@@ -10,6 +10,9 @@ export class UserRoles {
 
   @Prop({ required: true })
   name: string;
+
+  @Prop({ default: true })
+  isActive: boolean;
 }
 
 export const UserRolesSchema = SchemaFactory.createForClass(UserRoles);

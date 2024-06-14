@@ -1,7 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { CreateUserRoleDto, UpdateUserDto, UpdateUserRoleDto } from '@/features/users/dtos';
+import {
+  CreateUserRoleDto,
+  UpdateUserDto,
+  UpdateUserPasswordDto,
+  UpdateUserRoleDto,
+} from '@/features/users/dtos';
 import { UserRolesService, UsersService } from '@/features/users/services';
 
 const ROUTES = {
@@ -18,9 +23,15 @@ export class UsersController {
     private userRolesService: UserRolesService,
   ) {}
 
+  // users
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')
@@ -28,6 +39,17 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @Patch(':id')
+  updatePassword(@Param('id') id: string, @Body() updateUserPasswordDto: UpdateUserPasswordDto) {
+    return this.usersService.updatePassword(id, updateUserPasswordDto);
+  }
+
+  @Patch(':id')
+  updateStatus(@Param('id') id: string) {
+    return this.usersService.updateStatus(id);
+  }
+
+  // user roles
   @Post(ROUTES.USERS_ROLES)
   createUserRole(@Body() createUserRoleDto: CreateUserRoleDto) {
     return this.userRolesService.create(createUserRoleDto);
@@ -38,8 +60,23 @@ export class UsersController {
     return this.userRolesService.findAll();
   }
 
+  @Get(`${ROUTES.USERS_ROLES}/:id`)
+  findOneUserRole(@Param('id') id: string) {
+    return this.userRolesService.findOne(id);
+  }
+
   @Patch(`${ROUTES.USERS_ROLES}/:id`)
   updateUserRole(@Param('id') id: string, @Body() updateUserRoleDto: UpdateUserRoleDto) {
     return this.userRolesService.update(id, updateUserRoleDto);
+  }
+
+  @Patch(`${ROUTES.USERS_ROLES}/:id`)
+  updateUserRoleStatus(@Param('id') id: string) {
+    return this.userRolesService.updateStatus(id);
+  }
+
+  @Delete(`${ROUTES.USERS_ROLES}/:id`)
+  removeUserRole(@Param('id') id: string) {
+    return this.userRolesService.remove(id);
   }
 }
