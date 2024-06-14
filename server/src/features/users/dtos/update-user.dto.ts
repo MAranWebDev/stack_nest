@@ -1,7 +1,7 @@
 import { IntersectionType, OmitType, PartialType } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
-import { IsCustomId } from '@/features/users/decorators';
+import { IsCustomId } from '@/features/user-roles/decorators';
 
 import { CreateUserDto } from './create-user.dto';
 

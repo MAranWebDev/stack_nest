@@ -1,30 +1,22 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import {
-  CreateUserRoleDto,
-  UpdateUserDto,
-  UpdateUserPasswordDto,
-  UpdateUserRoleDto,
-} from '@/features/users/dtos';
-import { UserRolesService, UsersService } from '@/features/users/services';
+import { UpdateUserDto, UpdateUserPasswordDto } from '@/features/users/dtos';
 
-const ROUTE_USERS = 'users';
-const ROUTE_PASSWORD = 'password';
-const ROUTE_STATUS = 'status';
-const ROUTE_ROLES = 'roles';
-const ROUTE_ROLE_STATUS = `${ROUTE_ROLES}/status`;
+import { UsersService } from './users.service';
 
-@ApiTags(ROUTE_USERS)
+const ROUTES = {
+  USERS: 'users',
+  PASSWORD: 'password',
+  STATUS: 'status',
+} as const;
+
+@ApiTags(ROUTES.USERS)
 @ApiBearerAuth()
-@Controller(ROUTE_USERS)
+@Controller(ROUTES.USERS)
 export class UsersController {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly userRolesService: UserRolesService,
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
-  // users
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -40,44 +32,13 @@ export class UsersController {
     return this.usersService.update(id, updateUserDto);
   }
 
-  @Patch(`${ROUTE_PASSWORD}/:id`)
+  @Patch(`${ROUTES.PASSWORD}/:id`)
   updatePassword(@Param('id') id: string, @Body() updateUserPasswordDto: UpdateUserPasswordDto) {
     return this.usersService.updatePassword(id, updateUserPasswordDto);
   }
 
-  @Patch(`${ROUTE_STATUS}/:id`)
+  @Patch(`${ROUTES.STATUS}/:id`)
   updateStatus(@Param('id') id: string) {
     return this.usersService.updateStatus(id);
-  }
-
-  // user roles
-  @Post(ROUTE_ROLES)
-  createUserRole(@Body() createUserRoleDto: CreateUserRoleDto) {
-    return this.userRolesService.create(createUserRoleDto);
-  }
-
-  @Get(ROUTE_ROLES)
-  findAllUserRoles() {
-    return this.userRolesService.findAll();
-  }
-
-  @Get(`${ROUTE_ROLES}/:id`)
-  findOneUserRole(@Param('id') id: string) {
-    return this.userRolesService.findOne(id);
-  }
-
-  @Patch(`${ROUTE_ROLES}/:id`)
-  updateUserRole(@Param('id') id: string, @Body() updateUserRoleDto: UpdateUserRoleDto) {
-    return this.userRolesService.update(id, updateUserRoleDto);
-  }
-
-  @Patch(`${ROUTE_ROLE_STATUS}/:id`)
-  updateUserRoleStatus(@Param('id') id: string) {
-    return this.userRolesService.updateStatus(id);
-  }
-
-  @Delete(`${ROUTE_ROLES}/:id`)
-  removeUserRole(@Param('id') id: string) {
-    return this.userRolesService.remove(id);
   }
 }
