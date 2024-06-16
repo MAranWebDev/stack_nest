@@ -16,7 +16,7 @@ export class Users {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true })
+  @Prop({ default: true })
   isActive: boolean;
 
   @Prop({ type: String, ref: UserRoles.name, default: 'DEFAULT' })
