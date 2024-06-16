@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+import { Roles } from '@/features/auth/decorators';
 import { UpdateUserDto, UpdateUserPasswordDto } from '@/features/users/dtos';
 
 import { UsersService } from './users.service';
@@ -11,6 +12,7 @@ const ROUTES = {
   STATUS: 'status',
 } as const;
 
+@Roles(Role.Admin)
 @ApiTags(ROUTES.USERS)
 @ApiBearerAuth()
 @Controller(ROUTES.USERS)

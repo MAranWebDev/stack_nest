@@ -29,13 +29,13 @@ export class AuthService {
     if (!isMatch) throw new BadRequestException('Password does not match');
 
     const payload = {
-      id: user._id,
+      sub: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
     };
 
     const jwt = await this.jwtService.signAsync(payload);
-    return { token: jwt };
+    return { access_token: jwt };
   }
 }
