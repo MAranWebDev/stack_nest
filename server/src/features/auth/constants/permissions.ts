@@ -4,7 +4,7 @@ type PermissionType = `${ACTIONS[number]}_${ENTITIES[number]}`;
 type PermissionsType = Record<Uppercase<PermissionType>, PermissionType>;
 export type PERMISSIONS = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 
-const ENTITIES = ['sample', 'users'] as const;
+const ENTITIES = ['sample', 'users', 'user_roles'] as const;
 const ACTIONS = ['create', 'read', 'update', 'delete'] as const;
 
 const getPermissions = (entities: ENTITIES, actions: ACTIONS) => {
