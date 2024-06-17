@@ -29,10 +29,10 @@ export class AuthService {
     if (!isMatch) throw new BadRequestException('Password does not match');
 
     const payload = {
-      sub: user._id,
-      userName: user.name,
-      userEmail: user.email,
-      userRole: user.role,
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
     };
 
     const jwt = await this.jwtService.signAsync(payload);
