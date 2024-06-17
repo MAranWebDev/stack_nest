@@ -37,13 +37,6 @@ export class UserRolesService {
     return { message: 'Role updated' };
   }
 
-  async updateStatus(id: string) {
-    const { isActive } = await this.findOne(id);
-    const newStatus = isActive ? 'disabled' : 'enabled';
-    await this.userRolesModel.updateOne({ _id: id }, { isActive: !isActive });
-    return { message: `Role ${newStatus}` };
-  }
-
   async remove(id: string) {
     await this.findOne(id);
 
