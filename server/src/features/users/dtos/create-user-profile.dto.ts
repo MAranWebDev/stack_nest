@@ -8,6 +8,6 @@ export class CreateUserProfileDto {
   _id: PROFILES;
 
   @MinLength(4)
-  @MaxLength(20)
+  @MaxLength(30)
   description: string;
 }

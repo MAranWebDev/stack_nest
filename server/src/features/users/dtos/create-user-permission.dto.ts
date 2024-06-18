@@ -8,6 +8,6 @@ export class CreateUserPermissionDto {
   _id: PERMISSIONS;
 
   @MinLength(4)
-  @MaxLength(20)
+  @MaxLength(30)
   description: string;
 }
