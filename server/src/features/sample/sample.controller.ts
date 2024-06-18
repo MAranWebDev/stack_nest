@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { PERMISSIONS } from '@/features/auth/constants';
 import { RequirePermissions } from '@/features/auth/decorators';
+import { PERMISSIONS } from '@/features/users/constants';
 
 import { CreateSampleDto, UpdateSampleDto } from './dtos';
 import { SampleQueueService, SampleService } from './services';
