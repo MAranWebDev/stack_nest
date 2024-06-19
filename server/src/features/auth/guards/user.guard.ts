@@ -8,7 +8,7 @@ export class UserGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const { headers, params } = context.switchToHttp().getRequest();
-    const jwt = headers.authorization.split(' ')[1]; // Assuming JWT is in the Authorization header
+    const jwt = headers.authorization.split(' ')[1];
     return this.authService.validateJwtSub(jwt, params.id);
   }
 }

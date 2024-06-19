@@ -43,8 +43,9 @@ export class AuthService {
 
   async validateJwtSub(jwt: string, paramsId: string) {
     try {
-      const secret = this.configService.get('JWT_SECRET');
-      const { sub } = await this.jwtService.verifyAsync(jwt, { secret });
+      const { sub } = await this.jwtService.verifyAsync(jwt, {
+        secret: this.configService.get('JWT_SECRET'),
+      });
       return sub === paramsId;
     } catch (error) {
       return false;
