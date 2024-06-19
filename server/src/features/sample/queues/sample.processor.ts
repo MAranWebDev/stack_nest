@@ -14,20 +14,20 @@ export class SampleProcessor {
   @Process(SAMPLE_QUEUE.TYPE_CREATE)
   async create(job: Job) {
     const response = await this.sampleService.create(job.data);
-    this.logger.debug(`record created with response: ${response}`);
+    this.logger.debug(`Record created with response: ${response}`);
     return response;
   }
 
   @Process(SAMPLE_QUEUE.TYPE_UPDATE)
   async update(job: Job) {
     const response = await this.sampleService.update(job.data.id, job.data.updateSampleDto);
-    this.logger.debug(`record updated with response: ${response}`);
+    this.logger.debug(`Record updated with response: ${response}`);
   }
 
   @Process(SAMPLE_QUEUE.TYPE_REMOVE)
   async remove(job: Job) {
     const response = await this.sampleService.remove(job.data);
-    this.logger.debug(`record removed with response: ${response}`);
+    this.logger.debug(`Record removed with response: ${response}`);
   }
 
   @OnQueueActive()
