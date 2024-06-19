@@ -1,7 +1,6 @@
 import { OmitType, PartialType } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
-import { PERMISSIONS } from '@/features/auth/constants';
 import { IsCustomId } from '@/features/users/decorators';
 
 import { CreateUserProfileDto } from './create-user-profile.dto';
@@ -11,5 +10,5 @@ export class UpdateUserProfileDto extends PartialType(
 ) {
   @IsCustomId()
   @IsOptional()
-  permissions?: PERMISSIONS[];
+  permissions?: string[];
 }
