@@ -1,6 +1,6 @@
 import { MaxLength, MinLength } from 'class-validator';
 
-import { PERMISSIONS } from '@/features/users/constants';
+import { PERMISSIONS } from '@/features/auth/constants';
 import { IsCustomId } from '@/features/users/decorators';
 
 export class CreateUserPermissionDto {
