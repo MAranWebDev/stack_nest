@@ -16,8 +16,9 @@ export class UserProfilesService {
   ) {}
 
   async create(createUserProfileDto: CreateUserProfileDto) {
-    const profile = await this.userProfilesModel.findById(createUserProfileDto._id).exec();
-    if (profile) throw new BadRequestException('Profile already exists');
+    const { _id } = createUserProfileDto;
+    const profile = await this.userProfilesModel.findById(_id).exec();
+    if (profile) throw new BadRequestException(`Profile ${_id} already exists`);
 
     return this.userProfilesModel.create(createUserProfileDto);
   }
@@ -28,7 +29,7 @@ export class UserProfilesService {
 
   async findOne(id: string) {
     const profile = await this.userProfilesModel.findById(id).exec();
-    if (!profile) throw new NotFoundException('Profile not found');
+    if (!profile) throw new NotFoundException(`Profile ${id} not found`);
     return profile;
   }
 
@@ -45,13 +46,13 @@ export class UserProfilesService {
     }
 
     await this.userProfilesModel.updateOne({ _id: id }, updateUserProfileDto);
-    return { message: 'Profile updated' };
+    return { message: `Profile ${id} updated` };
   }
 
   async remove(id: string) {
     await this.findOne(id);
 
     await this.userProfilesModel.deleteOne({ _id: id });
-    return { message: 'Profile deleted' };
+    return { message: `Profile ${id} deleted` };
   }
 }

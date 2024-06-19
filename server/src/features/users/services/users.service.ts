@@ -61,7 +61,7 @@ export class UsersService {
       { _id: id },
       { ...updatePasswordDto, password: hashedPassword },
     );
-    return { message: 'User password updated' };
+    return { message: 'Password updated' };
   }
 
   async updateStatus(id: string) {

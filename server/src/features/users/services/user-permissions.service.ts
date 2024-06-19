@@ -14,8 +14,9 @@ export class UserPermissionsService {
   ) {}
 
   async create(createUserPermissionDto: CreateUserPermissionDto) {
-    const permission = await this.userPermissionsModel.findById(createUserPermissionDto._id).exec();
-    if (permission) throw new BadRequestException('Permission already exists');
+    const { _id } = createUserPermissionDto;
+    const permission = await this.userPermissionsModel.findById(_id).exec();
+    if (permission) throw new BadRequestException(`Permission ${_id} already exists`);
 
     return this.userPermissionsModel.create(createUserPermissionDto);
   }
@@ -26,7 +27,7 @@ export class UserPermissionsService {
 
   async findOne(id: string) {
     const permission = await this.userPermissionsModel.findById(id).exec();
-    if (!permission) throw new NotFoundException('Permission not found');
+    if (!permission) throw new NotFoundException(`Permission ${id} not found`);
     return permission;
   }
 
@@ -36,13 +37,13 @@ export class UserPermissionsService {
     await this.findOne(id);
 
     await this.userPermissionsModel.updateOne({ _id: id }, updateUserPermissionDto);
-    return { message: 'Permission updated' };
+    return { message: `Permission ${id} updated` };
   }
 
   async remove(id: string) {
     await this.findOne(id);
 
     await this.userPermissionsModel.deleteOne({ _id: id });
-    return { message: 'Permission deleted' };
+    return { message: `Permission ${id} deleted` };
   }
 }
