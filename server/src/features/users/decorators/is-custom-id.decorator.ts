@@ -1,10 +1,12 @@
-import { IsLowercase, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsLowercase, IsString, MaxLength, MinLength, ValidationOptions } from 'class-validator';
 
-export const IsCustomId = () => {
+export const IsCustomId = (options: { array?: boolean } = {}) => {
   return function (object: any, propertyName: string) {
-    IsLowercase()(object, propertyName);
-    IsString()(object, propertyName);
-    MinLength(4)(object, propertyName);
-    MaxLength(30)(object, propertyName);
+    const validationOptions: ValidationOptions = { each: options.array };
+
+    IsLowercase(validationOptions)(object, propertyName);
+    IsString(validationOptions)(object, propertyName);
+    MinLength(4, validationOptions)(object, propertyName);
+    MaxLength(30, validationOptions)(object, propertyName);
   };
 };
