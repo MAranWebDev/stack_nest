@@ -12,7 +12,7 @@ const registerValues = { ...loginValues, [INPUTS.NAME]: '', [INPUTS.CONFIRM_PASS
 const registerArray = [...loginArray, INPUTS.NAME, INPUTS.CONFIRM_PASSWORD];
 
 export const useAuthForm = (action: ACTIONS) => {
-  const condition = action === ACTIONS.LOGIN ? true : false;
+  const isLogin = action === ACTIONS.LOGIN;
 
   const { mutate, isError, isPending } = useAuthMutate(action);
   const {
@@ -22,12 +22,12 @@ export const useAuthForm = (action: ACTIONS) => {
     watch,
     formState: { errors },
   } = useForm<RegisterInputsType>({
-    defaultValues: condition ? loginValues : registerValues,
+    defaultValues: isLogin ? loginValues : registerValues,
   });
 
-  const watchedFields = watch(condition ? loginArray : registerArray);
+  const watchedFields = watch(isLogin ? loginArray : registerArray);
   const isFormEmpty = Object.values(watchedFields).some((value) => value === '');
-  const formValidations = condition ? getLoginValidations() : getRegisterValidations({ getValues });
+  const formValidations = isLogin ? getLoginValidations() : getRegisterValidations({ getValues });
 
   const onSubmit: SubmitHandler<RegisterInputsType> = async (inputs) => mutate(inputs);
 

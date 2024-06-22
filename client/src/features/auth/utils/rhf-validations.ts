@@ -1,4 +1,4 @@
-import { FieldValues, RegisterOptions, UseFormGetValues } from 'react-hook-form';
+import { RegisterOptions, UseFormGetValues } from 'react-hook-form';
 
 import { INPUTS } from '@/features/auth/constants';
 import { RegisterInputsType } from '@/features/auth/types';
@@ -8,7 +8,7 @@ interface RegisterPropsType {
 }
 
 interface ReturnType {
-  [key: string]: RegisterOptions<FieldValues, INPUTS>;
+  [key: string]: RegisterOptions<RegisterInputsType, INPUTS>;
 }
 
 const REGEX = { EMAIL: /\S+@\S+\.\S+/ };
