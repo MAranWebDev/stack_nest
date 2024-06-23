@@ -1,20 +1,38 @@
-type ENTITIES = typeof ENTITIES;
-type ACTIONS = typeof ACTIONS;
-type PermissionType = `${ACTIONS[number]}_${ENTITIES[number]}`;
-type PermissionsType = Record<Uppercase<PermissionType>, PermissionType>;
-export type PERMISSIONS = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
+type ActionType = (typeof ACTIONS)[number];
+type FeatureType = (typeof FEATURES)[number];
+type RemovePermissionType = (typeof REMOVE_PERMISSIONS)[number];
+type AddPermissionType = (typeof ADD_PERMISSIONS)[number];
+type AllPermissionType = `${ActionType}_${FeatureType}` | AddPermissionType;
+type PermissionType = Exclude<AllPermissionType, RemovePermissionType>;
+type PermissionsType = {
+  [K in Uppercase<PermissionType>]: Lowercase<K>;
+};
+export type PERMISSIONS = PermissionType;
 
-const ENTITIES = ['sample', 'users', 'user_profiles', 'user_permissions'] as const;
 const ACTIONS = ['create', 'read', 'update', 'delete'] as const;
+const FEATURES = ['sample', 'users', 'user_profiles', 'user_permissions'] as const;
+const REMOVE_PERMISSIONS = ['create_users', 'update_users', 'delete_users'] as const;
+const ADD_PERMISSIONS = [] as const;
+const removePermissions = [...REMOVE_PERMISSIONS] as string[];
+const addPermissions = [...ADD_PERMISSIONS] as string[];
 
-const getPermissions = (entities: ENTITIES, actions: ACTIONS) => {
-  return entities.reduce((acc, entity) => {
-    actions.forEach((action) => {
-      const permission = `${action}_${entity}` as const;
-      acc[permission.toUpperCase()] = permission;
-    });
-    return acc;
-  }, {} as PermissionsType);
+const getPermissions = () => {
+  const permissions = {} as PermissionsType;
+
+  for (const action of ACTIONS) {
+    for (const feature of FEATURES) {
+      const permission = `${action}_${feature}`;
+      if (!removePermissions.includes(permission)) {
+        permissions[permission.toUpperCase()] = permission;
+      }
+    }
+  }
+
+  for (const addPermission of addPermissions) {
+    permissions[addPermission.toUpperCase()] = addPermission;
+  }
+
+  return permissions;
 };
 
-export const PERMISSIONS = getPermissions(ENTITIES, ACTIONS);
+export const PERMISSIONS = getPermissions();
