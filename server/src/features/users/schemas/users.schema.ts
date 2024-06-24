@@ -18,9 +18,6 @@ export class Users {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ default: true })
-  isActive: boolean;
-
   @Prop({ type: String, ref: UserProfiles.name, default: PROFILES.USER })
   profile: string;
 }
