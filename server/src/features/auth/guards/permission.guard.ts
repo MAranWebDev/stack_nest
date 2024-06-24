@@ -2,8 +2,8 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 import { AuthService } from '@/features/auth/auth.service';
-import { PERMISSIONS } from '@/features/auth/constants';
 import { PERMISSION_KEY } from '@/features/auth/decorators';
+import { PERMISSIONS } from '@/features/users/constants';
 import { UserProfilesService } from '@/features/users/services';
 
 @Injectable()
