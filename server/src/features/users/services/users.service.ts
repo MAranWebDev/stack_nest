@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 
-import { CreateUserDto, UpdatePasswordDto, UpdateUserDto } from '@/features/users/dtos';
+import { CreateUserDto, UpdateUserDto, UpdateUserProfileDto } from '@/features/users/dtos';
 import { Users } from '@/features/users/schemas';
 import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
 
@@ -46,28 +46,23 @@ export class UsersService {
 
     await this.findOne(id);
 
-    const { profile } = updateUserDto;
-    if (profile) await this.userProfilesService.findOne(profile);
+    let updateValues = updateUserDto;
+    const { password } = updateValues;
+    if (password) {
+      const hashedPassword = await this._hashPassword(password);
+      updateValues = { ...updateValues, password: hashedPassword };
+    }
 
-    await this.usersModel.updateOne({ _id: id }, updateUserDto);
+    await this.usersModel.updateOne({ _id: id }, updateValues);
     return { message: 'User updated' };
   }
 
-  async updatePassword(id: string, updatePasswordDto: UpdatePasswordDto) {
+  async updateProfile(id: string, updateUserProfileDto: UpdateUserProfileDto) {
     await this.findOne(id);
 
-    const hashedPassword = await this._hashPassword(updatePasswordDto.password);
-    await this.usersModel.updateOne(
-      { _id: id },
-      { ...updatePasswordDto, password: hashedPassword },
-    );
-    return { message: 'Password updated' };
-  }
+    await this.userProfilesService.findOne(updateUserProfileDto.profile);
 
-  async updateStatus(id: string) {
-    const { isActive } = await this.findOne(id);
-    await this.usersModel.updateOne({ _id: id }, { isActive: !isActive });
-    const newStatus = isActive ? 'disabled' : 'enabled';
-    return { message: `User ${newStatus}` };
+    await this.usersModel.updateOne({ _id: id }, updateUserProfileDto);
+    return { message: 'User profile updated' };
   }
 }
