@@ -8,9 +8,6 @@ export class UserProfiles {
   @Prop()
   _id: string;
 
-  @Prop({ required: true })
-  description: string;
-
   @Prop({ default: [] })
   permissions: string[];
 }
