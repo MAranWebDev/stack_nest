@@ -1,11 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-import { PROFILES } from '@/features/users/constants';
-
 import { UserProfiles } from './user-profiles.schema';
 
 export type UsersDocument = HydratedDocument<Users>;
+
+const PROFILES = {
+  USER: 'user',
+} as const;
 
 @Schema()
 export class Users {
