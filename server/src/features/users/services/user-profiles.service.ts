@@ -13,15 +13,12 @@ export class UserProfilesService {
     @InjectModel(UserProfiles.name) private readonly userProfilesModel: Model<UserProfiles>,
   ) {}
 
-  private _validatePermissions = (permissions: string[]) => {
+  private validatePermissions = (permissions: string[]) => {
     const permissionsArray: string[] = Object.values(PERMISSIONS);
 
-    if (permissions.length > 0) {
-      for (const permission of permissions) {
-        if (!permissionsArray.includes(permission))
-          throw new BadRequestException(`Permission '${permission}' not allowed`);
-      }
-    }
+    for (const permission of permissions)
+      if (!permissionsArray.includes(permission))
+        throw new BadRequestException(`Permission '${permission}' not allowed`);
   };
 
   async create(createProfileDto: CreateProfileDto) {
@@ -48,7 +45,7 @@ export class UserProfilesService {
     await this.findOne(id);
 
     const { permissions } = updateProfileDto;
-    permissions && this._validatePermissions(permissions);
+    permissions && this.validatePermissions(permissions);
 
     await this.userProfilesModel.updateOne({ _id: id }, updateProfileDto);
     return { message: `Profile #${id} updated` };
