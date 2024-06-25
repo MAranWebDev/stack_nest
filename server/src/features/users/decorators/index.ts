@@ -1,1 +1,1 @@
-export * from './is-custom-id.decorator';
+export * from './is-custom-permission.decorator';
