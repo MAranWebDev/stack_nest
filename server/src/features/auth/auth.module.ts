@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
@@ -7,7 +7,7 @@ import { UsersModule } from '@/features/users/users.module';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtAuthGuard, UserGuard } from './guards';
+import { JwtAuthGuard, PermissionGuard } from './guards';
 import { JwtStrategy } from './utils';
 
 @Module({
@@ -20,10 +20,15 @@ import { JwtStrategy } from './utils';
       }),
       inject: [ConfigService],
     }),
-    forwardRef(() => UsersModule),
+    UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, UserGuard, { provide: APP_GUARD, useClass: JwtAuthGuard }],
-  exports: [AuthService, UserGuard],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: PermissionGuard },
+  ],
+  exports: [AuthService],
 })
 export class AuthModule {}

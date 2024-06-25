@@ -11,8 +11,8 @@ export type PERMISSIONS = PermissionType;
 
 const ACTIONS = ['create', 'read', 'update', 'delete'] as const;
 const FEATURES = ['sample', 'users', 'user_profiles', 'user_permissions'] as const;
-const REMOVE_PERMISSIONS = ['create_users', 'update_users', 'delete_users'] as const;
-const ADD_PERMISSIONS = ['update_users_status'] as const;
+const REMOVE_PERMISSIONS = ['create_users', 'delete_users'] as const;
+const ADD_PERMISSIONS = ['update_users_profile'] as const;
 
 const getPermissions = () => {
   const removePermissions = [...REMOVE_PERMISSIONS] as string[];

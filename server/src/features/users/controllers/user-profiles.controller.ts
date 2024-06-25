@@ -1,10 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { PERMISSIONS } from '@/features/auth/constants';
 import { RequirePermission } from '@/features/auth/decorators';
-import { ROUTES } from '@/features/users/constants';
-import { CreateUserProfileDto, UpdateUserProfileDto } from '@/features/users/dtos';
+import { PERMISSIONS, ROUTES } from '@/features/users/constants';
+import { CreateProfileDto, UpdateProfileDto } from '@/features/users/dtos';
 import { UserProfilesService } from '@/features/users/services';
 
 @ApiTags(ROUTES.USER_PROFILES)
@@ -15,8 +14,8 @@ export class UserProfilesController {
 
   @Post()
   @RequirePermission(PERMISSIONS.CREATE_USER_PROFILES)
-  create(@Body() createUserProfileDto: CreateUserProfileDto) {
-    return this.userProfilesService.create(createUserProfileDto);
+  create(@Body() createProfileDto: CreateProfileDto) {
+    return this.userProfilesService.create(createProfileDto);
   }
 
   @Get()
@@ -33,8 +32,8 @@ export class UserProfilesController {
 
   @Patch(':id')
   @RequirePermission(PERMISSIONS.UPDATE_USER_PROFILES)
-  update(@Param('id') id: string, @Body() updateUserProfileDto: UpdateUserProfileDto) {
-    return this.userProfilesService.update(id, updateUserProfileDto);
+  update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
+    return this.userProfilesService.update(id, updateProfileDto);
   }
 
   @Delete(':id')
