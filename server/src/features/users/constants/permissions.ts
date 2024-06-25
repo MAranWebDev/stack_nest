@@ -15,15 +15,14 @@ const REMOVE_PERMISSIONS = ['create_users', 'delete_users'] as const;
 const ADD_PERMISSIONS = ['update_users_profile'] as const;
 
 const getPermissions = () => {
-  const removePermissions = [...REMOVE_PERMISSIONS] as string[];
-  const addPermissions = [...ADD_PERMISSIONS] as string[];
-
   const permissions = {} as PermissionsType;
+  const removePermissions = new Set(REMOVE_PERMISSIONS as readonly string[]);
+  const addPermissions = new Set(ADD_PERMISSIONS as readonly string[]);
 
   for (const action of ACTIONS) {
     for (const feature of FEATURES) {
       const permission = `${action}_${feature}`;
-      if (!removePermissions.includes(permission)) {
+      if (!removePermissions.has(permission)) {
         permissions[permission.toUpperCase()] = permission;
       }
     }
