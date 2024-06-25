@@ -24,7 +24,6 @@ export class AuthService {
     if (user) throw new BadRequestException('Email already exists');
 
     await this.usersService.create(createUserDto);
-
     return this.login(createUserDto);
   }
 

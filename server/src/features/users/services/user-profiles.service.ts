@@ -41,7 +41,6 @@ export class UserProfilesService {
 
   async update(id: string, updateProfileDto: UpdateProfileDto) {
     validateNoEmptyObject(updateProfileDto);
-
     await this.findOne(id);
 
     const { permissions } = updateProfileDto;
@@ -53,7 +52,6 @@ export class UserProfilesService {
 
   async remove(id: string) {
     await this.findOne(id);
-
     await this.userProfilesModel.deleteOne({ _id: id });
     return { message: `Profile #${id} deleted` };
   }

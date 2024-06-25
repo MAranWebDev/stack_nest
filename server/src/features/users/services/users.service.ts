@@ -16,12 +16,12 @@ export class UsersService {
     private readonly userProfilesService: UserProfilesService,
   ) {}
 
-  private async _hashPassword(password: string) {
+  private async hashPassword(password: string) {
     return bcrypt.hash(password, 10);
   }
 
   async create(createUserDto: CreateUserDto) {
-    const hashedPassword = await this._hashPassword(createUserDto.password);
+    const hashedPassword = await this.hashPassword(createUserDto.password);
     return this.usersModel.create({ ...createUserDto, password: hashedPassword });
   }
 
@@ -43,25 +43,20 @@ export class UsersService {
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     validateNoEmptyObject(updateUserDto);
-
     await this.findOne(id);
 
-    let updateValues = updateUserDto;
-    const { password } = updateValues;
+    const { password } = updateUserDto;
     if (password) {
-      const hashedPassword = await this._hashPassword(password);
-      updateValues = { ...updateValues, password: hashedPassword };
+      updateUserDto.password = await this.hashPassword(password);
     }
 
-    await this.usersModel.updateOne({ _id: id }, updateValues);
+    await this.usersModel.updateOne({ _id: id }, updateUserDto);
     return { message: 'User updated' };
   }
 
   async updateProfile(id: string, updateUserProfileDto: UpdateUserProfileDto) {
     await this.findOne(id);
-
     await this.userProfilesService.findOne(updateUserProfileDto.profile);
-
     await this.usersModel.updateOne({ _id: id }, updateUserProfileDto);
     return { message: 'User profile updated' };
   }
