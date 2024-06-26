@@ -56,7 +56,7 @@ export class UsersService {
 
   async updateProfile(id: string, updateUserProfileDto: UpdateUserProfileDto) {
     await this.findOne(id);
-    await this.userProfilesService.findOne(updateUserProfileDto.profile);
+    await this.userProfilesService.findOne(updateUserProfileDto.profileId);
     await this.usersModel.updateOne({ _id: id }, updateUserProfileDto);
     return { message: 'User profile updated' };
   }

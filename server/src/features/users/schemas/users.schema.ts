@@ -21,7 +21,7 @@ export class Users {
   password: string;
 
   @Prop({ type: String, ref: UserProfiles.name, default: PROFILES.USER })
-  profile: string;
+  profileId: string;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(Users);

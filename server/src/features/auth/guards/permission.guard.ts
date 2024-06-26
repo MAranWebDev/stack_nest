@@ -34,12 +34,13 @@ export class PermissionGuard implements CanActivate {
 
     const { headers, params, user } = context.switchToHttp().getRequest();
     const jwt = headers.authorization.split(' ')[1];
-    const { profile, sub } = await this.authService.verifyJwt(jwt);
-    console.log(user); // ojo con esto
+    const { profileId, sub } = await this.authService.verifyJwt(jwt);
+    console.log(user);
+    // const { profileId, sub } = user;
 
     if (requiredPermission && isOwner)
-      return this.hasRequiredPermission(profile, requiredPermission) || sub === params.id;
-    if (requiredPermission) return this.hasRequiredPermission(profile, requiredPermission);
+      return this.hasRequiredPermission(profileId, requiredPermission) || sub === params.id;
+    if (requiredPermission) return this.hasRequiredPermission(profileId, requiredPermission);
     if (isOwner) return sub === params.id;
     return false;
   }

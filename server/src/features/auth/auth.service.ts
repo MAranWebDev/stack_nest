@@ -38,11 +38,11 @@ export class AuthService {
       sub: user._id,
       name: user.name,
       email: user.email,
-      profile: user.profile,
+      profileId: user.profileId,
     };
 
     const jwt = await this.jwtService.signAsync(payload);
-    return { access_token: jwt };
+    return { token: jwt };
   }
 
   async verifyJwt(jwt: string) {
