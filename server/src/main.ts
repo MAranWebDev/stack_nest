@@ -8,16 +8,16 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  /* envs only for this file */
+  // Envs only for this file
   const configService = app.get(ConfigService);
   const PORT = configService.get('SERVER_PORT') || 3000;
 
   const logger = new Logger('Main');
 
-  /* api url */
+  // Api url
   app.setGlobalPrefix('api/v1');
 
-  /* swagger & swagger url */
+  // Swagger & swagger url
   const config = new DocumentBuilder()
     .setTitle("Mario's API")
     .setDescription("Mario's API description")
@@ -27,13 +27,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  /* cors */
+  // Cors
   app.enableCors({ origin: configService.get('CLIENT_ORIGIN') });
 
-  /* validations */
+  // Validations
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
-  /* start server */
+  // Start server
   await app.listen(PORT, () => {
     logger.log(`Server running on port ${PORT}`);
   });

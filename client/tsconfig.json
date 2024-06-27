@@ -20,10 +20,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* absolute path */
+    // Absolute path
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["./src"] /* fix tsconfig error */,
+  "include": ["./src"], // Fix tsconfig error
   "references": [{ "path": "./tsconfig.node.json" }]
 }

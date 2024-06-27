@@ -15,10 +15,10 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
-    /* vite default rules */
+    // Vite default rules
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 
-    /* custom rules */
+    // Custom rules
     'no-restricted-imports': ['error', { patterns: ['src', '../**', '@/features/*/*/*'] }],
     'import/no-unresolved': ['error', { ignore: ['^@/'] }],
     'import/order': [
