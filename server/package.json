@@ -21,7 +21,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed": "nest start --entryFile db/seeds/seeds.script"
+    "seed": "nest start --entryFile db/seeds/seeds.script",
+    "seed:2": "ts-node -r tsconfig-paths/register db/seeds/seeds.script"
   },
   "dependencies": {
     "@bull-board/api": "^5.20.4",

@@ -8,7 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ENV } from './config/env';
-import { SeedsModule } from './db/seeds/seeds.module';
+import { SeedsService } from './db/seeds/seeds.service';
 import { AuthModule } from './features/auth/auth.module';
 import { SampleModule } from './features/sample/sample.module';
 import { UsersModule } from './features/users/users.module';
@@ -29,12 +29,11 @@ import { UsersModule } from './features/users/users.module';
       }),
       inject: [ConfigService],
     }),
-    SeedsModule,
     SampleModule,
     AuthModule,
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeedsService],
 })
 export class AppModule {}
