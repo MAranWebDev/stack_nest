@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 
+import { PROFILES } from '@/features/users/constants';
 import { CreateUserDto, UpdateUserDto, UpdateUserProfileDto } from '@/features/users/dtos';
 import { Users } from '@/features/users/schemas';
 import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
@@ -25,7 +26,11 @@ export class UsersService {
     if (user) throw new BadRequestException('Email already exists');
 
     const hashedPassword = await this.hashPassword(createUserDto.password);
-    return this.usersModel.create({ ...createUserDto, password: hashedPassword });
+    return this.usersModel.create({
+      ...createUserDto,
+      profile: PROFILES.USER,
+      password: hashedPassword,
+    });
   }
 
   async findAll() {

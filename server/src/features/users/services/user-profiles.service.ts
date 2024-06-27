@@ -18,7 +18,7 @@ export class UserProfilesService {
 
     for (const permission of permissions)
       if (!permissionsArray.includes(permission))
-        throw new BadRequestException(`Permission '${permission}' not allowed`);
+        throw new BadRequestException(`Permission '${permission}' doesn't exist`);
   };
 
   async create(createProfileDto: CreateProfileDto) {
@@ -35,7 +35,7 @@ export class UserProfilesService {
 
   async findOne(id: string) {
     const profile = await this.userProfilesModel.findById(id).exec();
-    if (!profile) throw new NotFoundException(`Profile #${id} not found`);
+    if (!profile) throw new NotFoundException(`Profile #${id} doesn't exist`);
     return profile;
   }
 
