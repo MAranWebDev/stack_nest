@@ -20,9 +20,6 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: CreateUserDto) {
-    const user = await this.usersService.findOneByEmail(createUserDto.email);
-    if (user) throw new BadRequestException('Email already exists');
-
     await this.usersService.create(createUserDto);
     return this.login(createUserDto);
   }
