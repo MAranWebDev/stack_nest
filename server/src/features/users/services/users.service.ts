@@ -25,6 +25,7 @@ export class UsersService {
     const user = await this.findOneByEmail(createUserDto.email);
     if (user) throw new BadRequestException('Email already exists');
 
+    await this.userProfilesService.findOne(PROFILES.USER);
     const hashedPassword = await this.hashPassword(createUserDto.password);
     return this.usersModel.create({
       ...createUserDto,
