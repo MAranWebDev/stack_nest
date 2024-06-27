@@ -32,11 +32,8 @@ export class PermissionGuard implements CanActivate {
 
     if (!requiredPermission && !isOwner) return true;
 
-    const { headers, params, user } = context.switchToHttp().getRequest();
-    const jwt = headers.authorization.split(' ')[1];
-    const { profileId, sub } = await this.authService.verifyJwt(jwt);
-    console.log(user); /* Ojo con esto */
-    // const { profileId, sub } = user; /* Ojo con esto */
+    const { params, user } = context.switchToHttp().getRequest();
+    const { profileId, sub } = user;
 
     if (requiredPermission && isOwner)
       return this.hasRequiredPermission(profileId, requiredPermission) || sub === params.id;
