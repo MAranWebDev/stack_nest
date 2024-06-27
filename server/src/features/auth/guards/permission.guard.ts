@@ -1,7 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import { AuthService } from '@/features/auth/auth.service';
 import { IS_OWNER_KEY, PERMISSION_KEY } from '@/features/auth/decorators';
 import { PERMISSIONS } from '@/features/users/constants';
 import { UserProfilesService } from '@/features/users/services';
@@ -10,7 +9,6 @@ import { UserProfilesService } from '@/features/users/services';
 export class PermissionGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly authService: AuthService,
     private readonly userProfilesService: UserProfilesService,
   ) {}
 
