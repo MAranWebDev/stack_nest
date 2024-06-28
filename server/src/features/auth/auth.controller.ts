@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { CreateUserDto, LogUserDto } from '@/features/users/dtos';
+import { AuthUserDto, LogUserDto } from '@/features/users/dtos';
 
 import { AuthService } from './auth.service';
 import { Public } from './decorators';
@@ -19,8 +19,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post(ROUTES.REGISTER)
-  register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
+  register(@Body() authUserDto: AuthUserDto) {
+    return this.authService.register(authUserDto);
   }
 
   @HttpCode(HttpStatus.OK)

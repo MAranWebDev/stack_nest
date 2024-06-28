@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 
-import { PROFILES } from '@/features/users/constants';
 import { CreateUserDto, UpdateUserDto, UpdateUserProfileDto } from '@/features/users/dtos';
 import { Users } from '@/features/users/schemas';
 import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
@@ -26,8 +25,8 @@ export class UsersService {
     const existingUser = await this.findOneByEmail(createUserDto.email);
     if (existingUser) throw new BadRequestException('Email already exists');
 
-    // Check if default profile exists
-    await this.userProfilesService.findOne(PROFILES.USER);
+    // Check if profile exists
+    await this.userProfilesService.findOne(createUserDto.profileId);
 
     // Hash the password
     const hashedPassword = await this.hashPassword(createUserDto.password);
@@ -35,7 +34,6 @@ export class UsersService {
     // Create and return the new user
     return this.usersModel.create({
       ...createUserDto,
-      profileId: PROFILES.USER,
       password: hashedPassword,
     });
   }
@@ -74,7 +72,9 @@ export class UsersService {
 
   async updateProfile(id: string, updateUserProfileDto: UpdateUserProfileDto) {
     await this.findOne(id); // Check if user exists
-    await this.userProfilesService.findOne(updateUserProfileDto.profileId); // Check if profile exists
+
+    // Check if profile exists
+    await this.userProfilesService.findOne(updateUserProfileDto.profileId);
 
     // Update user profile and return a message
     await this.usersModel.updateOne({ _id: id }, updateUserProfileDto);

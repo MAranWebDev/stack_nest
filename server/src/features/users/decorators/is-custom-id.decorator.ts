@@ -11,7 +11,7 @@ interface OptionsType {
   isArray?: boolean;
 }
 
-export const IsCustomPermission = ({ isArray }: OptionsType = {}) => {
+export const IsCustomId = ({ isArray }: OptionsType = {}) => {
   return function (object: any, propertyName: string) {
     const validationOptions: ValidationOptions = { each: isArray };
 

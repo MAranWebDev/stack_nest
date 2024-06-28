@@ -8,7 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { CreateUserDto, LogUserDto } from '@/features/users/dtos';
+import { PROFILES } from '@/features/users/constants';
+import { AuthUserDto, LogUserDto } from '@/features/users/dtos';
 import { UsersService } from '@/features/users/services';
 
 @Injectable()
@@ -19,9 +20,15 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async register(createUserDto: CreateUserDto) {
-    await this.usersService.create(createUserDto);
-    return this.login(createUserDto);
+  async register(authUserDto: AuthUserDto) {
+    // Create user
+    await this.usersService.create({ ...authUserDto, profileId: PROFILES.USER });
+
+    // Log user and return jwt
+    return this.login({
+      email: authUserDto.email,
+      password: authUserDto.password,
+    });
   }
 
   async login(logUserDto: LogUserDto) {

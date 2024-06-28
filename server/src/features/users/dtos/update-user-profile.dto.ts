@@ -1,6 +1,5 @@
-import { IsCustomPermission } from '@/features/users/decorators';
+import { PickType } from '@nestjs/swagger';
 
-export class UpdateUserProfileDto {
-  @IsCustomPermission()
-  profileId: string;
-}
+import { CreateUserDto } from './create-user.dto';
+
+export class UpdateUserProfileDto extends PickType(CreateUserDto, ['profileId'] as const) {}

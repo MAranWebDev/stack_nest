@@ -1,3 +1,4 @@
+export * from './auth-user.dto';
 export * from './create-profile.dto';
 export * from './create-user.dto';
 export * from './log-user.dto';

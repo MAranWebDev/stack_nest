@@ -1,5 +1,7 @@
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
+import { IsCustomId } from '@/features/users/decorators';
+
 export class CreateUserDto {
   @IsString()
   @MinLength(4)
@@ -14,4 +16,7 @@ export class CreateUserDto {
   @MinLength(4)
   @MaxLength(12)
   password: string;
+
+  @IsCustomId()
+  profileId: string;
 }

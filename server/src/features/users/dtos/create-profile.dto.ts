@@ -1,13 +1,13 @@
 import { IsOptional } from 'class-validator';
 
 import { PERMISSIONS } from '@/features/users/constants';
-import { IsCustomPermission } from '@/features/users/decorators';
+import { IsCustomId } from '@/features/users/decorators';
 
 export class CreateProfileDto {
-  @IsCustomPermission()
+  @IsCustomId()
   _id: string;
 
-  @IsCustomPermission({ isArray: true })
+  @IsCustomId({ isArray: true })
   @IsOptional()
   permissions?: PERMISSIONS[];
 }
