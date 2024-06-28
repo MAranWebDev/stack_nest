@@ -13,19 +13,36 @@ export class UserProfilesService {
     @InjectModel(UserProfiles.name) private readonly userProfilesModel: Model<UserProfiles>,
   ) {}
 
-  private validatePermissions = (permissions: string[]) => {
-    const permissionsArray: string[] = Object.values(PERMISSIONS);
+  private validateAndRemoveDuplicatePermissions = (permissions: string[]) => {
+    // Prevent empty array
+    if (permissions.length === 0) return [];
 
-    for (const permission of permissions)
-      if (!permissionsArray.includes(permission))
-        throw new BadRequestException(`Permission '${permission}' doesn't exist`);
+    const uniquePermissions = [...new Set(permissions)]; // Remove duplicates
+    const allowedPermissions: string[] = Object.values(PERMISSIONS);
+
+    // Validate permissions
+    uniquePermissions.forEach((permission) => {
+      if (!allowedPermissions.includes(permission))
+        throw new BadRequestException(`Permission '${permission}' not found`);
+    });
+
+    // Return unique permissions
+    return uniquePermissions as PERMISSIONS[];
   };
 
   async create(createProfileDto: CreateProfileDto) {
-    const { _id } = createProfileDto;
-    const profile = await this.userProfilesModel.findById(_id).exec();
-    if (profile) throw new BadRequestException(`Profile #${_id} already exists`);
+    const { _id, permissions } = createProfileDto;
 
+    // Check if profile is duplicated
+    const existingProfile = await this.userProfilesModel.findById(_id).exec();
+    if (existingProfile) throw new BadRequestException(`Profile #${_id} already exists`);
+
+    // Validate and set permissions if provided
+    if (permissions) {
+      createProfileDto.permissions = this.validateAndRemoveDuplicatePermissions(permissions);
+    }
+
+    // Create and return the new profile
     return this.userProfilesModel.create(createProfileDto);
   }
 
@@ -35,23 +52,29 @@ export class UserProfilesService {
 
   async findOne(id: string) {
     const profile = await this.userProfilesModel.findById(id).exec();
-    if (!profile) throw new NotFoundException(`Profile #${id} doesn't exist`);
+    if (!profile) throw new NotFoundException(`Profile #${id} not found`);
     return profile;
   }
 
   async update(id: string, updateProfileDto: UpdateProfileDto) {
     validateNoEmptyObject(updateProfileDto);
-    await this.findOne(id);
+    await this.findOne(id); // Check if profile exists
 
+    // Validate and set permissions if provided
     const { permissions } = updateProfileDto;
-    permissions && this.validatePermissions(permissions);
+    if (permissions) {
+      updateProfileDto.permissions = this.validateAndRemoveDuplicatePermissions(permissions);
+    }
 
+    // Update profile and return a message
     await this.userProfilesModel.updateOne({ _id: id }, updateProfileDto);
     return { message: `Profile #${id} updated` };
   }
 
   async remove(id: string) {
-    await this.findOne(id);
+    await this.findOne(id); // Check if profile exists
+
+    // Delete profile and return a message
     await this.userProfilesModel.deleteOne({ _id: id });
     return { message: `Profile #${id} deleted` };
   }
