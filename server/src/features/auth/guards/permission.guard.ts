@@ -13,30 +13,38 @@ export class PermissionGuard implements CanActivate {
   ) {}
 
   private async hasRequiredPermission(profileId: string, requiredPermission: PERMISSIONS) {
-    const { permissions } = await this.userProfilesService.findOne(profileId);
-    return permissions.includes(requiredPermission);
+    try {
+      // Check if profile exists and return it
+      const { permissions } = await this.userProfilesService.findOne(profileId);
+
+      // Validate required permission
+      return permissions.includes(requiredPermission);
+    } catch (error) {
+      return false;
+    }
   }
 
   async canActivate(context: ExecutionContext) {
-    const requiredPermission = this.reflector.getAllAndOverride<PERMISSIONS>(PERMISSION_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-
     const isOwner = this.reflector.getAllAndOverride<boolean>(IS_OWNER_KEY, [
       context.getHandler(),
       context.getClass(),
     ]);
 
-    if (!requiredPermission && !isOwner) return true;
+    const requiredPermission = this.reflector.getAllAndOverride<PERMISSIONS>(PERMISSION_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (!isOwner && !requiredPermission) return true;
 
     const { params, user } = context.switchToHttp().getRequest();
     const { profileId, sub } = user;
+    const isSameUserId = sub === params.id;
 
-    if (requiredPermission && isOwner)
-      return this.hasRequiredPermission(profileId, requiredPermission) || sub === params.id;
+    if (isOwner && requiredPermission)
+      return isSameUserId || this.hasRequiredPermission(profileId, requiredPermission);
+    if (isOwner) return isSameUserId;
     if (requiredPermission) return this.hasRequiredPermission(profileId, requiredPermission);
-    if (isOwner) return sub === params.id;
     return false;
   }
 }
