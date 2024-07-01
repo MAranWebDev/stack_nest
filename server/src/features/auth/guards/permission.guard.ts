@@ -3,18 +3,20 @@ import { Reflector } from '@nestjs/core';
 
 import { IS_OWNER_KEY, PERMISSION_KEY } from '@/features/auth/decorators';
 import { PERMISSIONS } from '@/features/users/constants';
-import { UserProfilesService } from '@/features/users/services';
+import { UserProfilesService, UsersService } from '@/features/users/services';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
+    private readonly usersService: UsersService,
     private readonly userProfilesService: UserProfilesService,
   ) {}
 
-  private async hasRequiredPermission(profileId: string, requiredPermission: PERMISSIONS) {
+  private async hasRequiredPermission(sub: string, requiredPermission: PERMISSIONS) {
     try {
-      // Check if profile exists and return it
+      // Check if user and profile exists and return them
+      const { profileId } = await this.usersService.findOne(sub);
       const { permissions } = await this.userProfilesService.findOne(profileId);
 
       // Validate required permission
@@ -38,13 +40,13 @@ export class PermissionGuard implements CanActivate {
     if (!isOwner && !requiredPermission) return true;
 
     const { params, user } = context.switchToHttp().getRequest();
-    const { profileId, sub } = user;
+    const { sub } = user;
     const isSameUserId = sub === params.id;
 
     if (isOwner && requiredPermission)
-      return isSameUserId || this.hasRequiredPermission(profileId, requiredPermission);
+      return isSameUserId || this.hasRequiredPermission(sub, requiredPermission);
     if (isOwner) return isSameUserId;
-    if (requiredPermission) return this.hasRequiredPermission(profileId, requiredPermission);
+    if (requiredPermission) return this.hasRequiredPermission(sub, requiredPermission);
     return false;
   }
 }
