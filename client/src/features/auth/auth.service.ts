@@ -31,9 +31,8 @@ const helpers = {
 export const authService = {
   async register(registerBody: RegisterBodyType) {
     try {
-      const {
-        data: { token },
-      } = await axiosApi.post(ENDPOINTS.REGISTER, registerBody);
+      const { data } = await axiosApi.post(ENDPOINTS.REGISTER, registerBody);
+      const { token } = data;
       if (token) return helpers._handleJwt(token);
       throw Error();
     } catch (error) {
@@ -43,9 +42,8 @@ export const authService = {
 
   async login(loginBody: LoginInputsType) {
     try {
-      const {
-        data: { token },
-      } = await axiosApi.post(ENDPOINTS.LOGIN, loginBody);
+      const { data } = await axiosApi.post(ENDPOINTS.LOGIN, loginBody);
+      const { token } = data;
       if (token) return helpers._handleJwt(token);
       throw Error();
     } catch (error) {

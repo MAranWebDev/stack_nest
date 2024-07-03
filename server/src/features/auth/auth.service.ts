@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
@@ -17,7 +11,6 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
   ) {}
 
   async register(authUserDto: AuthUserDto) {
@@ -47,15 +40,5 @@ export class AuthService {
 
     const jwt = await this.jwtService.signAsync(payload);
     return { token: jwt };
-  }
-
-  async verifyJwt(jwt: string) {
-    const secret = this.configService.get('JWT_SECRET');
-
-    try {
-      return await this.jwtService.verifyAsync(jwt, { secret });
-    } catch (error) {
-      throw new UnauthorizedException('Invalid token');
-    }
   }
 }
