@@ -9,12 +9,12 @@
     "server"
   ],
   "scripts": {
-    "clean:all": "rm -rf ./node_modules && rm -rf ./*/node_modules && rm -rf ./*/dist && rm -rf ./yarn.lock",
-    "seed": "yarn --cwd ./server seed",
+    "clean": "rimraf \"./{yarn.lock,node_modules}\" && yarn --cwd ./server clean && yarn --cwd ./client clean",
     "start:server": "yarn --cwd ./server start:dev",
-    "start:client": "yarn --cwd ./client dev",
-    "test:server": "yarn --cwd ./server test:watch",
+    "start:client": "yarn --cwd ./client start:dev",
+    "seed:server": "yarn --cwd ./server seed",
     "format": "yarn --cwd ./server format && yarn --cwd ./client format",
-    "lint": "yarn --cwd ./server lint && yarn --cwd ./client lint"
+    "lint": "yarn --cwd ./server lint && yarn --cwd ./client lint",
+    "test:server": "yarn --cwd ./server test:watch"
   }
 }
