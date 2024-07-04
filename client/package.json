@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "clean": "rimraf \"./{dist,node_modules}\"",
+    "clean": "rm -rf ./{dist,node_modules}",
     "build": "tsc && vite build",
     "start:dev": "vite",
     "start:preview": "vite preview",
