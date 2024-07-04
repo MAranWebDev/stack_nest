@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "clean": "rm -rf ./{coverage,dist,node_modules}",
+    "clean": "rm -rf ./coverage ./dist ./node_modules",
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",

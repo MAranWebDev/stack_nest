@@ -1,7 +1,7 @@
 {
   "name": "app-mario",
   "version": "1.0.0",
-  "author": "mario arancibia",
+  "author": "Mario Arancibia",
   "license": "ISC",
   "private": true,
   "workspaces": [
@@ -9,7 +9,7 @@
     "server"
   ],
   "scripts": {
-    "clean": "rm -rf ./{yarn.lock,node_modules} && yarn --cwd ./server clean && yarn --cwd ./client clean",
+    "clean": "rm -rf ./yarn.lock ./node_modules && yarn --cwd ./server clean && yarn --cwd ./client clean",
     "start:server": "yarn --cwd ./server start:dev",
     "start:client": "yarn --cwd ./client start:dev",
     "seed:server": "yarn --cwd ./server seed",

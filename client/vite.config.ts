@@ -1,5 +1,7 @@
-import react from '@vitejs/plugin-react-swc';
+/* eslint-disable import/no-default-export */
 import * as path from 'path';
+
+import react from '@vitejs/plugin-react-swc';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
