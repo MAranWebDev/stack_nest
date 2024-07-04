@@ -5,13 +5,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ENV } from './config/env';
-import { SeedsService } from './db/seeds/seeds.service';
+import { AppController } from './features/app/app.controller';
+import { AppService } from './features/app/app.service';
 import { AuthModule } from './features/auth/auth.module';
 import { SampleModule } from './features/sample/sample.module';
 import { UsersModule } from './features/users/users.module';
+import { SeedsService } from './seeds/seeds.service';
 
 @Module({
   imports: [
