@@ -9,6 +9,7 @@ import { DatabaseModule } from './features/database/database.module';
 import { QueuesModule } from './features/queues/queues.module';
 import { SampleModule } from './features/sample/sample.module';
 import { UsersModule } from './features/users/users.module';
+import { SeedsService } from './seeds/seeds.service';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { UsersModule } from './features/users/users.module';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeedsService],
 })
 export class AppModule {}
