@@ -1,8 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 
+import { userProfiles, users } from '@/features/database/data';
 import { UserProfilesService, UsersService } from '@/features/users/services';
-
-import { userProfiles, users } from './data';
 
 @Injectable()
 export class SeedsService {
