@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 
 import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
 
-describe('validateMongooseObjectId', () => {
+describe(validateMongooseObjectId.name, () => {
   const invalidId = 'invalidId';
   const validMongooseObjectId = new Types.ObjectId().toHexString();
 
@@ -11,12 +11,12 @@ describe('validateMongooseObjectId', () => {
     expect(() => validateMongooseObjectId(invalidId)).toThrow(BadRequestException);
   });
 
-  it('returns true for valid ObjectId format', () => {
-    expect(validateMongooseObjectId(validMongooseObjectId)).toBe(true);
+  it('does not throw for valid ObjectId format', () => {
+    expect(() => validateMongooseObjectId(validMongooseObjectId)).not.toThrow();
   });
 });
 
-describe('validateNoEmptyObject', () => {
+describe(validateNoEmptyObject.name, () => {
   const emptyObject = {};
   const objectWithValue = { key: 'value' };
 
@@ -24,7 +24,7 @@ describe('validateNoEmptyObject', () => {
     expect(() => validateNoEmptyObject(emptyObject)).toThrow(BadRequestException);
   });
 
-  it('returns true for an object with properties', () => {
-    expect(validateNoEmptyObject(objectWithValue)).toBe(true);
+  it('does not throw for an object with properties', () => {
+    expect(() => validateNoEmptyObject(objectWithValue)).not.toThrow();
   });
 });
