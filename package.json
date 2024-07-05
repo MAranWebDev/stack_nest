@@ -10,11 +10,12 @@
   ],
   "scripts": {
     "clean": "rm -rf ./yarn.lock ./node_modules && yarn --cwd ./server clean && yarn --cwd ./client clean",
-    "start:server": "yarn --cwd ./server start:dev",
-    "start:client": "yarn --cwd ./client start:dev",
-    "seed:server": "yarn --cwd ./server seed",
+    "server:start": "yarn --cwd ./server start:dev",
+    "client:start": "yarn --cwd ./client start:dev",
+    "server:seed": "yarn --cwd ./server seed",
     "format": "yarn --cwd ./server format && yarn --cwd ./client format",
     "lint": "yarn --cwd ./server lint && yarn --cwd ./client lint",
-    "test:server": "yarn --cwd ./server test:watch"
+    "server:test": "yarn --cwd ./server test:watch",
+    "server:test:cov": "yarn --cwd ./server test:cov"
   }
 }
