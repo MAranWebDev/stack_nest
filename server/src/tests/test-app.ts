@@ -36,7 +36,7 @@ export const setupTestApp = async () => {
   return app;
 };
 
-export const teardownTestApp = async () => {
+export const destroyTestApp = async () => {
   if (app) await app.close();
   if (mongoServer) await mongoServer.stop();
 };
