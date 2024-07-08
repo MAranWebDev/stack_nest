@@ -63,9 +63,11 @@ describe(UserProfilesService.name, () => {
     ])('$description', ({ input, expected }) => {
       if (expected === BadRequestException) {
         const testFunction = () => validatePermissions(input);
+
         expect(testFunction).toThrow(expected);
       } else {
         const result = validatePermissions(input);
+
         expect(result).toEqual(expected);
       }
     });

@@ -13,7 +13,7 @@ import { UsersModule } from '@/features/users/users.module';
 let mongoServer: MongoMemoryServer;
 let app: INestApplication;
 
-export const testSetupStart = async () => {
+export const setupTestApp = async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
 
@@ -36,7 +36,7 @@ export const testSetupStart = async () => {
   return app;
 };
 
-export const testSetupEnd = async () => {
+export const teardownTestApp = async () => {
   if (app) await app.close();
   if (mongoServer) await mongoServer.stop();
 };
