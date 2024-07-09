@@ -6,6 +6,8 @@ import * as request from 'supertest';
 import { AppService } from '@/features/app/app.service';
 import { destroyTestApp, setupTestApp } from '@/tests/test-app';
 
+const ROUTE = '/';
+
 let service: AppService;
 let httpServer: Server;
 
@@ -23,8 +25,6 @@ afterAll(async () => {
 beforeEach(() => {
   jest.restoreAllMocks();
 });
-
-const ROUTE = '/';
 
 it(`GET ${ROUTE} - should call the service, return status 200 and a defined body`, async () => {
   const spyGetHello = jest.spyOn(service, 'getHello');
