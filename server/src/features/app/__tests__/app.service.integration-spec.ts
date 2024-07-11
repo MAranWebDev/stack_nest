@@ -18,7 +18,7 @@ describe(`${AppService.name} (integration)`, () => {
     if (module) await module.close();
   });
 
-  it(`getHello - should return a JSON object with message: 'Hello World!'`, () => {
+  it('getHello - should return a JSON object with message: "Hello World!"', () => {
     const expectedResult = { message: 'Hello World!' };
 
     const result = service.getHello();
