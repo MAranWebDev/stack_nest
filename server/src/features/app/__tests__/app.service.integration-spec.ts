@@ -1,22 +1,28 @@
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { AppService } from '@/features/app/app.service';
-import { destroyTestApp, setupTestApp } from '@/tests/test-app';
 
-let service: AppService;
+describe(`${AppService.name} (integration)`, () => {
+  let module: TestingModule;
+  let service: AppService;
 
-beforeAll(async () => {
-  const app = await setupTestApp();
+  beforeAll(async () => {
+    module = await Test.createTestingModule({
+      providers: [AppService],
+    }).compile();
 
-  service = app.get(AppService);
-});
+    service = module.get(AppService);
+  });
 
-afterAll(async () => {
-  await destroyTestApp();
-});
+  afterAll(async () => {
+    if (module) await module.close();
+  });
 
-it('getHello - should return a JSON object with message: "Hello World"', () => {
-  const expectedResult = { message: 'Hello World!' };
+  it(`getHello - should return a JSON object with message: 'Hello World!'`, () => {
+    const expectedResult = { message: 'Hello World!' };
 
-  const result = service.getHello();
+    const result = service.getHello();
 
-  expect(result).toEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
+  });
 });
