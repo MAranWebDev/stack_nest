@@ -8,8 +8,7 @@ import { AppService } from '@/features/app/app.service';
 import { destroyTestApp, setupTestApp } from '@/tests/test-app';
 
 describe(`${AppController.name} (integration)`, () => {
-  const ROUTE = '/';
-
+  // Tests setup
   let service: AppService;
   let httpServer: Server;
 
@@ -28,13 +27,18 @@ describe(`${AppController.name} (integration)`, () => {
     jest.restoreAllMocks();
   });
 
-  it(`GET ${ROUTE} - should call the service, return status 200 and a defined body`, async () => {
-    const spyGetHello = jest.spyOn(service, 'getHello');
+  // Tests
+  const ROUTE = '/';
 
-    const { status, body } = await request(httpServer).get(ROUTE);
+  describe(`GET ${ROUTE}`, () => {
+    it('should call the service, return status 200 and a defined body', async () => {
+      const spyGetHello = jest.spyOn(service, 'getHello');
 
-    expect(spyGetHello).toHaveBeenCalled();
-    expect(status).toBe(HttpStatus.OK);
-    expect(body).toBeDefined();
+      const { status, body } = await request(httpServer).get(ROUTE);
+
+      expect(spyGetHello).toHaveBeenCalled();
+      expect(status).toBe(HttpStatus.OK);
+      expect(body).toBeDefined();
+    });
   });
 });
