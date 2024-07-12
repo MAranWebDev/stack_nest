@@ -4,26 +4,20 @@ import { Types } from 'mongoose';
 import { validateMongooseObjectId, validateNoEmptyObject } from '@/utils/validators';
 
 describe(validateMongooseObjectId.name, () => {
-  it.each([
-    {
-      description: 'should throw BadRequestException when given an invalid ObjectId format',
-      input: 'invalidId',
-      expectedError: 'Invalid ObjectId format',
-    },
-    {
-      description: 'should not throw when given a valid ObjectId format',
-      input: new Types.ObjectId().toHexString(),
-      expectedError: null,
-    },
-  ])('$description', ({ input, expectedError }) => {
+  it('should throw BadRequestException when given an invalid ObjectId format', () => {
+    const input = 'invalidId';
+    const expectedError = 'Invalid ObjectId format';
     const testFunction = () => validateMongooseObjectId(input);
 
-    if (expectedError !== null) {
-      expect(testFunction).toThrow(BadRequestException);
-      expect(testFunction).toThrow(expectedError);
-    } else {
-      expect(testFunction).not.toThrow();
-    }
+    expect(testFunction).toThrow(BadRequestException);
+    expect(testFunction).toThrow(expectedError);
+  });
+
+  it('should not throw when given a valid ObjectId format', () => {
+    const input = new Types.ObjectId().toHexString();
+    const testFunction = () => validateMongooseObjectId(input);
+
+    expect(testFunction).not.toThrow();
   });
 });
 
@@ -39,19 +33,17 @@ describe(validateNoEmptyObject.name, () => {
       input: {},
       expectedError: 'Object must contain at least one property',
     },
-    {
-      description: 'should not throw for an object with properties',
-      input: { key: 'value' },
-      expectedError: null,
-    },
   ])('$description', ({ input, expectedError }) => {
     const testFunction = () => validateNoEmptyObject(input);
 
-    if (expectedError !== null) {
-      expect(testFunction).toThrow(BadRequestException);
-      expect(testFunction).toThrow(expectedError);
-    } else {
-      expect(testFunction).not.toThrow();
-    }
+    expect(testFunction).toThrow(BadRequestException);
+    expect(testFunction).toThrow(expectedError);
+  });
+
+  it('should not throw for an object with properties', () => {
+    const input = { key: 'value' };
+    const testFunction = () => validateNoEmptyObject(input);
+
+    expect(testFunction).not.toThrow();
   });
 });
