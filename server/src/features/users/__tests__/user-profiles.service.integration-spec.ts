@@ -9,7 +9,7 @@ import { UserProfilesService } from '@/features/users/services';
 import { destroyTestApp, setupTestApp } from '@/tests/test-app';
 
 describe(`${UserProfilesService.name} (integration)`, () => {
-  // Test setup
+  // Tests setup
   let model: Model<UserProfiles>;
   let service: UserProfilesService;
 
@@ -29,7 +29,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
     await model.deleteMany();
   });
 
-  // Tests variables
+  // Tests
   const NAMES = {
     VARD_PERMISSIONS: 'validateAndRemoveDuplicatePermissions',
     CREATE: 'create',
@@ -44,7 +44,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
     const validatePermissions = (permissions: string[]) =>
       service[NAMES.VARD_PERMISSIONS](permissions);
 
-    it(`${NAMES.VARD_PERMISSIONS} - should throw BadRequestException when an invalid permission is provided`, () => {
+    it('should throw BadRequestException when an invalid permission is provided', () => {
       const input = ['invalidPermission'];
       const testFunction = () => validatePermissions(input);
 
@@ -69,7 +69,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
         input: [PERMISSIONS.READ_USERS],
         expected: [PERMISSIONS.READ_USERS],
       },
-    ])(`${NAMES.VARD_PERMISSIONS} - $description`, ({ input, expected }) => {
+    ])('$description', ({ input, expected }) => {
       const result = validatePermissions(input);
 
       expect(result).toEqual(expected);
@@ -79,13 +79,13 @@ describe(`${UserProfilesService.name} (integration)`, () => {
   // describe(NAMES.CREATE, () => {});
 
   describe(NAMES.FIND_ALL, () => {
-    it(`${NAMES.FIND_ALL} - should return an empty array if no profiles exist`, async () => {
+    it('should return an empty array if no profiles exist', async () => {
       const result = await service.findAll();
 
       expect(result).toEqual([]);
     });
 
-    it(`${NAMES.FIND_ALL} - should return an array with profiles if they exist`, async () => {
+    it('should return an array with profiles if they exist', async () => {
       const profilesToLoad: CreateProfileDto[] = [
         { _id: 'test1' },
         { _id: 'test2', permissions: [] },
