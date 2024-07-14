@@ -26,6 +26,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
   });
 
   beforeEach(async () => {
+    jest.restoreAllMocks();
     await model.deleteMany();
   });
 
@@ -76,7 +77,27 @@ describe(`${UserProfilesService.name} (integration)`, () => {
     });
   });
 
-  // describe(NAMES.CREATE, () => {});
+  describe(NAMES.CREATE, () => {
+    const createProfileDto: CreateProfileDto = { _id: 'test1', permissions: [] };
+
+    it('should throw BadRequestException if profile already exists', async () => {
+      await model.create(createProfileDto); // Load fake data
+
+      const resultPromise = service.create(createProfileDto);
+
+      await expect(resultPromise).rejects.toThrow(BadRequestException);
+    });
+
+    it(`should call ${NAMES.VARD_PERMISSIONS} method if permissions provided`, async () => {
+      const spyValidatePermissions = jest.spyOn(service as any, NAMES.VARD_PERMISSIONS);
+
+      await service.create(createProfileDto);
+
+      expect(spyValidatePermissions).toHaveBeenCalled();
+    });
+
+    it('should create a profile', () => {});
+  });
 
   describe(NAMES.FIND_ALL, () => {
     it('should return an empty array if no profiles exist', async () => {
