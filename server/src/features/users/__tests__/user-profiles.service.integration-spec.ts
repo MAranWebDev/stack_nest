@@ -112,7 +112,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
         description: 'should not validate permissions when permissions property is not provided',
         input: newProfile,
       },
-    ])(`${NAMES.VARD_PERMISSIONS} method - $description`, async ({ input }) => {
+    ])(`${NAMES.VARD_PERMISSIONS} method $description`, async ({ input }) => {
       const spyValidatePermissions = jest.spyOn(service as any, NAMES.VARD_PERMISSIONS);
 
       await service.create(input);
@@ -125,7 +125,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
     });
 
     // Test provided values
-    it('should create 3 profiles with the provided values', async () => {
+    it('should create and return 3 profiles with the provided values and include all their properties', async () => {
       const expected = newProfiles.map((profile) => ({
         ...profile,
         permissions: profile.permissions || [],
