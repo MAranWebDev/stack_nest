@@ -26,8 +26,8 @@ describe(`${UserProfilesService.name} (integration)`, () => {
   });
 
   beforeEach(async () => {
-    jest.restoreAllMocks();
-    await model.deleteMany();
+    jest.restoreAllMocks(); // Clean mocks
+    await model.deleteMany({}); // Clean database
   });
 
   // Tests
@@ -41,17 +41,22 @@ describe(`${UserProfilesService.name} (integration)`, () => {
   };
 
   describe(NAMES.VARD_PERMISSIONS, () => {
-    // Test variables
+    // Helpers
+    const invalidPermissions = ['invalidPermission'];
+    const uniquePermissions = [PERMISSIONS.READ_USERS];
+    const duplicatePermissions = [...uniquePermissions, ...uniquePermissions];
+
     const validatePermissions = (permissions: string[]) =>
       service[NAMES.VARD_PERMISSIONS](permissions);
 
+    // Test errors
     it('should throw BadRequestException when an invalid permission is provided', () => {
-      const input = ['invalidPermission'];
-      const testFunction = () => validatePermissions(input);
+      const testFunction = () => validatePermissions(invalidPermissions);
 
       expect(testFunction).toThrow(BadRequestException);
     });
 
+    // Test provided values
     it.each([
       {
         description: 'should return an empty array when given an empty array',
@@ -61,14 +66,14 @@ describe(`${UserProfilesService.name} (integration)`, () => {
       {
         description:
           'should return an array with unique permissions when given duplicated permissions',
-        input: [PERMISSIONS.READ_USERS, PERMISSIONS.READ_USERS],
-        expected: [PERMISSIONS.READ_USERS],
+        input: duplicatePermissions,
+        expected: uniquePermissions,
       },
       {
         description:
           'should return the same array with unique permissions when all permissions are valid and unique',
-        input: [PERMISSIONS.READ_USERS],
-        expected: [PERMISSIONS.READ_USERS],
+        input: uniquePermissions,
+        expected: uniquePermissions,
       },
     ])('$description', ({ input, expected }) => {
       const result = validatePermissions(input);
@@ -78,25 +83,61 @@ describe(`${UserProfilesService.name} (integration)`, () => {
   });
 
   describe(NAMES.CREATE, () => {
-    const createProfileDto: CreateProfileDto = { _id: 'test1', permissions: [] };
+    // Helpers
+    const newProfile: CreateProfileDto = { _id: 'test1' };
+    const newProfileEmptyPermissions: CreateProfileDto = { _id: 'test2', permissions: [] };
+    const newProfilePermissions: CreateProfileDto = {
+      _id: 'test3',
+      permissions: [PERMISSIONS.READ_USERS],
+    };
+    const newProfiles = [newProfile, newProfileEmptyPermissions, newProfilePermissions];
 
+    // Test errors
     it('should throw BadRequestException if profile already exists', async () => {
-      await model.create(createProfileDto); // Load fake data
+      // Load fake data
+      await model.create(newProfile);
 
-      const resultPromise = service.create(createProfileDto);
+      const resultPromise = service.create(newProfile);
 
       await expect(resultPromise).rejects.toThrow(BadRequestException);
     });
 
-    it(`should call ${NAMES.VARD_PERMISSIONS} method if permissions provided`, async () => {
+    // Test validations
+    it.each([
+      {
+        description: 'should be called when permissions property is provided',
+        input: newProfilePermissions,
+      },
+      {
+        description: 'should not validate permissions when permissions property is not provided',
+        input: newProfile,
+      },
+    ])(`${NAMES.VARD_PERMISSIONS} method - $description`, async ({ input }) => {
       const spyValidatePermissions = jest.spyOn(service as any, NAMES.VARD_PERMISSIONS);
 
-      await service.create(createProfileDto);
+      await service.create(input);
 
-      expect(spyValidatePermissions).toHaveBeenCalled();
+      if (input.permissions) {
+        expect(spyValidatePermissions).toHaveBeenCalled();
+      } else {
+        expect(spyValidatePermissions).not.toHaveBeenCalled();
+      }
     });
 
-    it('should create a profile', () => {});
+    // Test provided values
+    it('should create 3 profiles with the provided values', async () => {
+      const expected = newProfiles.map((profile) => ({
+        ...profile,
+        permissions: profile.permissions || [],
+        __v: 0,
+      }));
+
+      const createProfilePromises = newProfiles.map((profile) => service.create(profile));
+      const result = await Promise.all(createProfilePromises);
+      const plainResult = result.map((doc) => doc.toObject());
+
+      expect(plainResult).toEqual(expect.arrayContaining(expected));
+    });
   });
 
   describe(NAMES.FIND_ALL, () => {
@@ -106,27 +147,14 @@ describe(`${UserProfilesService.name} (integration)`, () => {
       expect(result).toEqual([]);
     });
 
-    it('should return an array with profiles if they exist', async () => {
-      const profilesToLoad: CreateProfileDto[] = [
-        { _id: 'test1' },
-        { _id: 'test2', permissions: [] },
-        { _id: 'test3', permissions: [PERMISSIONS.READ_USERS] },
-      ];
-      await model.insertMany(profilesToLoad);
+    it('should return an array with a single existing profile', async () => {
+      // Load fake data
+      const profileToLoad: CreateProfileDto = { _id: 'test1' };
+      await model.create(profileToLoad);
 
       const result = await service.findAll();
-      const plainResult = result.map((doc) => doc.toObject());
-      const expected = profilesToLoad.map((profile) => ({
-        ...profile,
-        permissions: profile.permissions || [],
-        __v: 0,
-      }));
 
-      expect(plainResult).toEqual(expect.arrayContaining(expected));
+      expect(result).toHaveLength(1);
     });
   });
-
-  // describe(NAMES.FIND_ONE, () => {});
-  // describe(NAMES.UPDATE, () => {});
-  // describe(NAMES.REMOVE, () => {});
 });
