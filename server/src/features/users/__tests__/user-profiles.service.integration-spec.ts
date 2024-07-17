@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -38,7 +38,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
     FIND_ONE: 'findOne',
     UPDATE: 'update',
     REMOVE: 'remove',
-  };
+  } as const;
 
   describe(NAMES.VARD_PERMISSIONS, () => {
     // Helpers
@@ -85,7 +85,10 @@ describe(`${UserProfilesService.name} (integration)`, () => {
   describe(NAMES.CREATE, () => {
     // Helpers
     const newProfile: CreateProfileDto = { _id: 'test1' };
-    const newProfileEmptyPermissions: CreateProfileDto = { _id: 'test2', permissions: [] };
+    const newProfileEmptyPermissions: CreateProfileDto = {
+      _id: 'test2',
+      permissions: [],
+    };
     const newProfilePermissions: CreateProfileDto = {
       _id: 'test3',
       permissions: [PERMISSIONS.READ_USERS],
@@ -112,7 +115,7 @@ describe(`${UserProfilesService.name} (integration)`, () => {
         description: 'should not validate permissions when permissions property is not provided',
         input: newProfile,
       },
-    ])(`${NAMES.VARD_PERMISSIONS} method $description`, async ({ input }) => {
+    ])(`${NAMES.VARD_PERMISSIONS} $description`, async ({ input }) => {
       const spyValidatePermissions = jest.spyOn(service as any, NAMES.VARD_PERMISSIONS);
 
       await service.create(input);
@@ -157,4 +160,37 @@ describe(`${UserProfilesService.name} (integration)`, () => {
       expect(result).toHaveLength(1);
     });
   });
+
+  describe(NAMES.FIND_ONE, () => {
+    const profileToLoad: CreateProfileDto = { _id: 'test1' };
+
+    it('should throw NotFoundException if the provided profile ID is not found', async () => {
+      const resultPromise = service.findOne(profileToLoad._id);
+
+      await expect(resultPromise).rejects.toThrow(NotFoundException);
+    });
+
+    it('should return the profile that matches the provided ID', async () => {
+      // Load fake data
+      await model.create(profileToLoad);
+
+      const result = await service.findOne(profileToLoad._id);
+
+      expect(result._id).toBe(profileToLoad._id);
+    });
+  });
+
+  // describe(NAMES.REMOVE, () => {
+  //   it(`${NAMES.FIND_ONE} should be called`, async () => {
+  //     const spyFindOne = jest.spyOn(service, NAMES.FIND_ONE);
+
+  //     try {
+  //       await service.remove('test1');
+  //     } catch (error) {}
+
+  //     expect(spyFindOne).toHaveBeenCalled();
+  //   });
+
+  //   it('should delete the profile that matches the provided ID and return a message', async () => {});
+  // });
 });
