@@ -1,0 +1,44 @@
+{
+  // Formatting settings
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.eol": "\n",
+  "files.insertFinalNewline": true, // No prettier equivalent
+  "files.encoding": "utf8", // No prettier equivalent
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.wordWrapColumn": 100,
+  "files.trimTrailingWhitespace": true, // No prettier equivalent
+
+  // Formatters
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[env]": {
+    "editor.defaultFormatter": "IronGeek.vscode-env"
+  },
+  "[properties][ignore][shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[dockercompose][dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+
+  // File-extension association
+  "files.associations": {
+    ".env": "env",
+    "*.env.*": "env"
+  },
+
+  // Vscode customization
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+
+  // Extensions customization
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.activeIconPack": "nest",
+  // Last line before new setting
+  "terminal.integrated.defaultProfile.windows": "Git Bash"
+}
