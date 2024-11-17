@@ -1,8 +1,8 @@
 {
-  "name": "app-mario",
+  "name": "stack_nest",
   "version": "1.0.0",
   "author": "Mario Arancibia",
-  "license": "ISC",
+  "license": "MIT",
   "private": true,
   "workspaces": [
     "client",
